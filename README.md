@@ -5,7 +5,7 @@ This library powers the Chmq app on Android, and the Chmq server-client (eg [her
 
 NB
 --
-I have included a copy of the [jni-rs] library here with a modified **Cargo.toml** without backtrace, to simplif compilation on android.
+I have included a copy of the [jni-rs] library here with a modified **Cargo.toml** without backtrace, to simplify compilation on android.
 
 Aims
 ----
@@ -89,7 +89,7 @@ use libchmq::{self,enq};
 
 //Initialise library.
 let mut compounds = Vec::with_capacity(200);
-let compounds = libchmq::enq::create_compound_lib(compounds);
+let compounds = enq::create_compound_lib(compounds);
 
 //Generate a complete question, answer and help
 //choosing at random from q_3_0, q_3_1 or q_3_2.
