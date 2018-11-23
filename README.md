@@ -3,6 +3,10 @@
 This is a library for generating simple chemistry calculation problems.
 This library powers the Chmq app on Android, and the Chmq server-client (eg [here]).
 
+NB
+--
+I have included a copy of the [jni-rs] library here with a modified **Cargo.toml** without backtrace, to simplif compilation on android.
+
 Aims
 ----
 
@@ -105,6 +109,7 @@ println!("Help:\n{}",help);
 Probably could do with a lot of cleaning up and optimisation. The Czech language section is a work in progress with most of the translation by [zjedna].
 
 [zjedna]:https://github.com/zjedna
-[here]: http://biomedicina.upol.cz:7000
+[here]:http://biomedicina.upol.cz:7000
+[jni-rs]:https://github.com/jni-rs/
 
 
