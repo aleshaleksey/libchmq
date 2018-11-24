@@ -216,7 +216,7 @@ fn state_const_match(con:u8)->String {
 		GAS => "(g)".to_owned(),
 		LIQ => "(l)".to_owned(),
 		SOL => "(s)".to_owned(),
-		AQ => "(aq)".to_owned(),
+		AQU => "(aq)".to_owned(),
 		_  => String::new(),
 	}
 }

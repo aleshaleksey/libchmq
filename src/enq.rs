@@ -4064,8 +4064,8 @@ pub fn q_7_3b(compounds:&Vec<Compound>)->(String,String){
 }				
 //Equilibirum constant questions:
 
-//Test reaction.
-pub fn q_5_0_pressure(reaction_lib:Vec<Reaction>)->(String,String) {
+//Will it go left or right.
+pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 	let (mut question,mut answer) = (String::with_capacity(500),String::with_capacity(500));
 	
 	//Pick 
@@ -4077,13 +4077,31 @@ pub fn q_5_0_pressure(reaction_lib:Vec<Reaction>)->(String,String) {
 	
 	question.push_str("Consider the following reaction:\n");
 	question.push_str(&reaction.draw());
-	question.push_str(&format!("In which direction will the equillibrium shift if the pressure {}?",change));
+	question.push_str(&format!("\nIn which direction will the equilibrium shift if the pressure {}?",change));
 	
 	//work out the answer.
-	let mut product_nums = 0;
 	let mut reagent_nums = 0;
+	for x in reaction.reagents.iter() {
+		if x.2==GAS {reagent_nums+= x.1;};
+	};
 	
-	answer.push_str("Think about it yourself!");
+	let mut product_nums = 0;
+	for x in reaction.products.iter() {
+		if x.2==GAS {product_nums+= x.1;};
+	};
+	
+	let result =if		(reagent_nums>product_nums) & increase  {"shift to the right"}
+				else if (reagent_nums<product_nums) & increase  {"shift to the left"}
+				else if (reagent_nums>product_nums) & !increase {"shift to the left"}
+				else if (reagent_nums<product_nums) & !increase {"shift to the right"}
+				else											 {"not change"}
+	; 
+	
+	//Start making the answer.
+	answer.push_str(&format!("Moles of reagent in the gas phase: {}\n",reagent_nums));
+	answer.push_str(&format!("Moles of product in the gas phase: {}\n",product_nums));
+	answer.push_str(&format!("Therefore if pressure {}, equilibrium will {}",change,result));
+
 	(question,answer)
 }
 
