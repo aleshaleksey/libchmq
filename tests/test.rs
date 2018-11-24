@@ -6,8 +6,8 @@ use libchmq::{enq,czq};
 		let reactions = enq::create_reaction_lib();
 		let (q,a) = enq::q_5_0_pressure(&reactions);
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
+		println!("Question:\n{}\n\n",q);
+		println!("Answer:\n{}\n",a);
 		assert!(true,true);
 	}
 
@@ -19,10 +19,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -34,10 +34,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -49,10 +49,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -64,10 +64,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -79,10 +79,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -94,10 +94,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -109,10 +109,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -124,10 +124,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -139,10 +139,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -154,10 +154,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -169,10 +169,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -184,10 +184,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -199,10 +199,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -214,10 +214,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -229,10 +229,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -244,10 +244,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -259,10 +259,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -274,10 +274,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -289,10 +289,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -304,10 +304,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -319,10 +319,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -334,10 +334,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -349,10 +349,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -364,10 +364,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -379,10 +379,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -394,10 +394,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -409,10 +409,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -424,10 +424,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -439,10 +439,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -454,10 +454,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -469,10 +469,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -484,10 +484,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -499,10 +499,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -514,10 +514,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -529,10 +529,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -544,10 +544,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -559,10 +559,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -574,10 +574,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -589,10 +589,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -604,10 +604,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -619,10 +619,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = enq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -634,10 +634,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -649,10 +649,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -664,10 +664,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -679,10 +679,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -694,10 +694,10 @@ use libchmq::{enq,czq};
 		//let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		//println!("Question:\n{}",q);
-		//println!("Answer:\n{}",a);
-		//println!("Datasheet:\n{}",mh);
-		//println!("Help:\n{}",h);
+		//println!("Question:\n{}\n",q);
+		//println!("Answer:\n{}\n",a);
+		//println!("Datasheet:\n{}\n",mh);
+		//println!("Help:\n{}\n",h);
 		//assert!(true,true);
 	//}
 
@@ -709,10 +709,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -724,10 +724,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -739,10 +739,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -754,10 +754,10 @@ use libchmq::{enq,czq};
 		//let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		//println!("Question:\n{}",q);
-		//println!("Answer:\n{}",a);
-		//println!("Datasheet:\n{}",mh);
-		//println!("Help:\n{}",h);
+		//println!("Question:\n{}\n",q);
+		//println!("Answer:\n{}\n",a);
+		//println!("Datasheet:\n{}\n",mh);
+		//println!("Help:\n{}\n",h);
 		//assert!(true,true);
 	//}
 
@@ -769,10 +769,10 @@ use libchmq::{enq,czq};
 		//let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		//println!("Question:\n{}",q);
-		//println!("Answer:\n{}",a);
-		//println!("Datasheet:\n{}",mh);
-		//println!("Help:\n{}",h);
+		//println!("Question:\n{}\n",q);
+		//println!("Answer:\n{}\n",a);
+		//println!("Datasheet:\n{}\n",mh);
+		//println!("Help:\n{}\n",h);
 		//assert!(true,true);
 	//}
 
@@ -784,10 +784,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -799,10 +799,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -814,10 +814,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -829,10 +829,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -844,10 +844,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -859,10 +859,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -874,10 +874,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -889,10 +889,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -904,10 +904,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -919,10 +919,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -934,10 +934,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -949,10 +949,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -964,10 +964,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -979,10 +979,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -994,10 +994,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1009,10 +1009,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1024,10 +1024,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1039,10 +1039,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1054,10 +1054,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1069,10 +1069,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1084,10 +1084,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1099,10 +1099,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1114,10 +1114,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1129,10 +1129,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1144,10 +1144,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1159,10 +1159,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1174,10 +1174,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1189,10 +1189,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1204,10 +1204,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1219,10 +1219,10 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
 
@@ -1234,9 +1234,9 @@ use libchmq::{enq,czq};
 		let (h,mh) = czq::helper(&q,&compounds);
 		
 		
-		println!("Question:\n{}",q);
-		println!("Answer:\n{}",a);
-		println!("Datasheet:\n{}",mh);
-		println!("Help:\n{}",h);
+		println!("Question:\n{}\n",q);
+		println!("Answer:\n{}\n",a);
+		println!("Datasheet:\n{}\n",mh);
+		println!("Help:\n{}\n",h);
 		assert!(true,true);
 	}
