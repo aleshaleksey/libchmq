@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+#![allow(unused_imports)]
 /// Jedná se o jednoduchý generátor otázek pro chemické výpočty
 /// pro opravdu základní chemické výpočty pro přednět Lékařská chemie
 /// in medicinal chemistry" classes. It was written because students frequently
@@ -11,11 +13,6 @@
 //when compiling for windows use: cargo rustc --bin chmquiz --release --target=x86_64-pc-windows-gnu -- -C linker=x86_64-w64-mingw32-gcc
 //when compiling for mac (experimental) use: cargo rustc --bin chmquiz --release --target=x86_64-apple-darwin -- -C linker=x86_64-w64-mingw32-gcc
 
-
-#[allow(unused_mut)]
-#[allow(unused_variables)]
-#[allow(unused_must_use)]
-#[allow(dead_code)]
 
 //use std::fs;
 use rand;

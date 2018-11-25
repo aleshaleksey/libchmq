@@ -59,7 +59,7 @@ pub struct Compound{
 }
 
 #[derive(Debug,Clone)]
-pub enum Equillibrium {
+pub enum Equilibrium {
 	Keq(f64),
 	DeltaH(f64),
 }
@@ -72,7 +72,7 @@ pub enum Equillibrium {
 pub struct FullReaction<'a> {
 	pub reagents: Vec<(&'a Compound,u8,u8)>,
 	pub products: Vec<(&'a Compound,u8,u8)>,
-	pub eq: Equillibrium, //enthalpy or Keq
+	pub eq: Equilibrium, //enthalpy or Keq
 }
 
 //Structure to hold a reaction.
@@ -82,7 +82,7 @@ pub struct FullReaction<'a> {
 pub struct Reaction {
 	pub reagents: Vec<(String,u8,u8)>,
 	pub products: Vec<(String,u8,u8)>,
-	pub eq: Equillibrium, //enthalpy or Keq
+	pub eq: Equilibrium, //enthalpy or Keq
 }
 
 //Functions for working with reactions.
@@ -91,7 +91,7 @@ pub struct Reaction {
 impl Reaction {
 	
 
-	
+	//Draw a basic reaction in a basic manner.
 	pub fn draw(&self)->String {
 		let mut output = String::with_capacity(500);
 		
@@ -117,11 +117,70 @@ impl Reaction {
 		output
 	}
 	
-	pub fn draw_with_state(&self)->String {String::with_capacity(500)}
+	//Draw a basic reaction with state symbols.
+	pub fn draw_with_state(&self)->String {
+		let mut output = String::with_capacity(500);
+		
+		//print reagents.
+		let lr = self.reagents.len();
+		if lr > 0 {
+			for i in 0..lr {	
+				let maybe_plus = if i==0 {""}else{" + "};
+				output.push_str(
+					&format!(
+						"{}{}{}{}",
+						maybe_plus,
+						rem_one(self.reagents[i].1),
+						self.reagents[i].0,
+						state_const_match(self.reagents[i].2)
+					)
+				);
+			};
+		};
+		
+		output.push_str(" ⇌ ");
+		
+		let lp = self.products.len();
+		if lp > 0 {
+			for i in 0..lp {	
+				let maybe_plus = if i==0 {""}else{" + "};
+				output.push_str(
+					&format!(
+						"{}{}{}{}",
+						maybe_plus,
+						rem_one(self.products[i].1),
+						self.products[i].0,
+						state_const_match(self.products[i].2)
+					)
+				);
+			};
+		};
+		
+		output	
+	}
 	
-	pub fn draw_with_heat(&self)->String {String::with_capacity(500)}
+	//Draw a basic reaction with enthalpy.
+	pub fn draw_with_heat(&self)->String {
+		let mut output = self.draw();
+		
+		match self.eq {
+			Equilibrium::DeltaH(x) => {output.push_str(&format!("  (ΔH = {}kJ/mol)",x));},
+			Equilibrium::Keq(x) => {output.push_str(&format!("  (Keq = {})",x));},
+		};
+		
+		output
+	}
 	
-	pub fn draw_with_hs(&self)->String {String::with_capacity(500)}
+	pub fn draw_with_hs(&self)->String {
+		let mut output = self.draw_with_state();
+		
+		match self.eq {
+			Equilibrium::DeltaH(x) => {output.push_str(&format!("  (ΔH = {}kJ/mol)",x));},
+			Equilibrium::Keq(x) => {output.push_str(&format!("  (Keq = {})",x));},
+		};
+		
+		output
+	}
 	
 	
 }
@@ -224,7 +283,7 @@ fn state_const_match(con:u8)->String {
 //get rid of excessive ones.
 fn rem_one(num:u8)->String {
 	match num {
-		1 => 1.to_string().to_owned(),
+		1 => "".to_owned(),
 		_ => num.to_string().to_owned(),
 	}
 }

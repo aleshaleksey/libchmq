@@ -26,10 +26,8 @@
 //  cargo rustc --release --target=arm-linux-androideabi -- -C linker="/home/alesha/NDK/arm/bin/arm-linux-androideabi-clang"
 // Can also be used from the directory with libchmqC's cargo.toml.
 	
-#[allow(unused_mut)]
-#[allow(unused_variables)]
-#[allow(unused_must_use)]
-#[allow(dead_code)]
+#![allow(dead_code)]
+#![allow(unused_imports)]
 
 use rand;
 use rand::Rng;
@@ -40,7 +38,7 @@ use std::f64::INFINITY;
 
 use Compound;
 use Reaction;
-use Equillibrium::{self,Keq,DeltaH};
+use Equilibrium::{self,Keq,DeltaH};
 
 use dis;
 use dis_u;
@@ -4076,7 +4074,7 @@ pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 	let change = if increase {"increases"}else{"decreases"};
 	
 	question.push_str("Consider the following reaction:\n");
-	question.push_str(&reaction.draw());
+	question.push_str(&reaction.draw_with_state());
 	question.push_str(&format!("\nIn which direction will the equilibrium shift if the pressure {}?",change));
 	
 	//work out the answer.
