@@ -1,4 +1,4 @@
-# libchmq
+# libchmq[<img src="https://api.travis-ci.org/aleshaleksey/libchmq.svg?branch=master">](https://travis-ci.org/aleshaleksey/libchmq)
 
 This is a library for generating simple chemistry calculation problems.
 This library powers the Chmq app on Android, and the Chmq server-client (eg [here]).
