@@ -46,11 +46,31 @@ use libchmq::{enq,czq};
 
 
 	#[test]
-	pub fn q_5_0() {
+	pub fn q_5_0a() {
 		let reactions = enq::create_reaction_lib();
 		let (q,a) = enq::q_5_0_pressure(&reactions);
 		
-		println!("Question:\n{}\n\n",q);
+		println!("\nQuestion:\n{}\n\n",q);
+		println!("Answer:\n{}\n",a);
+		assert!(true,true);
+	}
+	
+	#[test]
+	pub fn q_5_0b() {
+		let reactions = enq::create_reaction_lib();
+		let (q,a) = enq::q_5_0_enthalpy(&reactions);
+		
+		println!("\nQuestion:\n{}\n\n",q);
+		println!("Answer:\n{}\n",a);
+		assert!(true,true);
+	}
+	
+	#[test]
+	pub fn q_5_1() {
+		let reactions = enq::create_reaction_lib();
+		let (q,a) = enq::q_5_1(&reactions);
+		
+		println!("\nQuestion:\n{}\n\n",q);
 		println!("Answer:\n{}\n",a);
 		assert!(true,true);
 	}
