@@ -1,5 +1,49 @@
 extern crate libchmq;
 use libchmq::{enq,czq};
+	
+	//Test of drawing reactions.
+	#[test]
+	pub fn draw_reactions() {
+		let reactions = enq::create_reaction_lib();
+		
+		for x in reactions.iter() {
+			println!("\nReaction:\n {}",x.draw());
+			println!("Reaction with state:\n {}",x.draw_with_state());
+			println!("Reaction with enthalpy:\n {}",x.draw_with_heat());
+			println!("Reaction with both:\n {}",x.draw_with_hs());
+		};
+		println!("");
+		assert!(true,true);
+	}
+	
+	//Display Czech language compounds.
+	#[test]
+	pub fn czq_compounds() {
+		let mut compounds = Vec::with_capacity(100);
+		compounds = czq::create_compound_lib(compounds);
+		
+		for x in compounds.iter() {
+			println!("\n{}",czq::form_chem(x));
+			println!("{}",czq::mini_form_chem(x));
+		};
+		println!("");
+		assert!(true,true);
+	}
+	
+	//Display English langauge compounds.
+	#[test]
+	pub fn enq_compounds() {
+		let mut compounds = Vec::with_capacity(100);
+		compounds = enq::create_compound_lib(compounds);
+		
+		for x in compounds.iter() {
+			println!("\n{}",enq::form_chem(x));
+			println!("{}",enq::mini_form_chem(x));
+		};
+		println!("");
+		assert!(true,true);
+	}
+
 
 	#[test]
 	pub fn q_5_0() {
