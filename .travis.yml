@@ -1,0 +1,22 @@
+language: rust
+
+cache: cargo
+
+sudo: true
+
+branches: master
+
+os: -android
+
+git:
+  depth: 1
+rust:
+  - 1.28.0
+
+name: "libchmq"
+
+before_script:
+- cargo update
+
+script:
+- cargo build --release
