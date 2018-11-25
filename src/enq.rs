@@ -4092,7 +4092,7 @@ pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 				else if (reagent_nums<product_nums) & increase  {"shift to the left"}
 				else if (reagent_nums>product_nums) & !increase {"shift to the left"}
 				else if (reagent_nums<product_nums) & !increase {"shift to the right"}
-				else											 {"not change"}
+				else											{"not change"}
 	; 
 	
 	//Start making the answer.
@@ -4103,7 +4103,217 @@ pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 	(question,answer)
 }
 
+//Enthalpy question 
+pub fn q_5_0_enthalpy(reactions:&Vec<Reaction>)->(String,String) {
+	
+	let mut question = String::with_capacity(500);
+	let mut answer = String::with_capacity(500);
+	let enthalpic_error = ("Nothing to see here.".to_owned(),"Proceed to next question".to_owned());
+	
+	let mut enth_reactions = Vec::with_capacity(reactions.len());
+	
+	//Get reactions where enthalpy is used.
+	for x in reactions.iter() {
+		match x.eq {
+			DeltaH(_) => {enth_reactions.push(x);},
+			_		  => {},
+		};
+	};
+	
+	//Exit if library has no enthalpy based questions.
+	if enth_reactions.len()==0 {
+		return enthalpic_error
+	};
+	
+	//Pick reaction from valid reaction list.
+	let reaction = &enth_reactions[rand::thread_rng().gen_range(0,enth_reactions.len())];
+	
+	//Write question.
+	let increase = if rand::thread_rng().gen_range(0,200)>99 {true}else{false};
+	let change = if increase {"increases"}else{"decreases"};
+	
+	question.push_str("Consider the following reaction:\n");
+	question.push_str(&reaction.draw_with_hs());
+	question.push_str(&format!("\nIn which direction will the equilibrium shift if the temperature {}?",change));
+	
+	let (enth,enth_num) = match reaction.eq {
+		DeltaH (x) => {(dis(x),x)},
+		_		   => {return enthalpic_error;},
+	};
+	
+	let thermic = if enth_num>0.0 {"endothermic"}else{"exothermic"};
+	
+	
+	let result =if		(enth_num>0.0) & increase  {"shift to the right"}
+				else if (enth_num<0.0) & increase  {"shift to the left"}
+				else if (enth_num>0.0) & !increase {"shift to the left"}
+				else if (enth_num<0.0) & !increase {"shift to the right"}
+				else							   {"not change"}
+	; 
+	
+	answer.push_str(&format!("ΔH = {}kJ/mol, therefore the reaction is {}.",enth,thermic));
+	answer.push_str(&format!("\nWhen temperature {}, {} reactions will {}.\n",change,thermic,result));
+	
+	(question,answer)
+}
 
+//work out Keq from equilibrium concentrations.
+//UNFINISHED.
+pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
+	
+	let mut question = String::with_capacity(500);
+	let mut answer = String::with_capacity(500);
+	let enthalpic_error = ("Nothing to see here.".to_owned(),"Proceed to next question".to_owned());
+	
+	let mut keq_reactions = Vec::with_capacity(reactions.len());
+	
+	
+	//Get reactions where keq is used.
+	for x in reactions.iter() {
+		match x.eq {
+			Keq(_) => {keq_reactions.push(x);},
+			_		  => {},
+		};
+	};
+	
+	//Exit if library has no enthalpy based questions.
+	if keq_reactions.len()==0 {
+		return enthalpic_error
+	};
+	
+	let reaction:&Reaction = keq_reactions[rand::thread_rng().gen_range(0,keq_reactions.len())];
+	
+	//Get Keq - NB, this needs to be recalculated at the end.
+	let keq:f64 = match reaction.eq {
+		Keq(x) => {x*rand::thread_rng().gen_range(0.5,1.5)},
+		_	   => {return enthalpic_error;},
+	};
+	
+	//Generate concentration totals between 1mM-5M.
+	//NB for whichever is more abundant.
+	let sum_concs:f64 = rand::thread_rng().gen_range(1,5001) as f64/1000.0;
+	let products = if keq>1.0 {true}else{false};
+	
+	//generate max_conc of a single product.
+	let chosen_side = if products {&reaction.products}else{&reaction.reagents};
+	let unchosen_side = if products {&reaction.reagents}else{&reaction.products};
+	let mut chosen_concs = Vec::new();
+	let mut unchosen_concs = Vec::new();
+	let mut chosen_side_product = 1.0;
+	
+	//NB the max_conc isn't actually a limit. More a guideline.
+	let max_conc = sum_concs/chosen_side.len() as f64;
+	let min = max_conc/1000.0;
+	
+	//work out product of concentrations of products/reagents.
+	for (i,_) in chosen_side.iter().enumerate() {
+		let conc:f64 = rand::thread_rng().gen_range(min,max_conc);
+		chosen_concs.push(conc);
+		chosen_side_product*= if chosen_side[i].2!=SOL {
+			conc.powf(chosen_side[i].1 as f64)
+		}else{
+			1.0
+		};
+	};
+	
+	//get the other half of the equation.
+	let mut unchosen_side_product = if products {
+		chosen_side_product/keq
+	}else{
+		keq*chosen_side_product
+	};
+	
+	let mut unchosen_num:f64 = unchosen_side.iter().fold(
+		0.0,|acc,x|
+		if x.2!=SOL {acc + x.1 as f64}else{acc}
+	);
+	//work out reagent concentrations.
+	for i in 0..(unchosen_side.len()-1) {
+		if chosen_side[i].2==SOL {
+			let conc:f64 = rand::thread_rng().gen_range(min,max_conc);
+			unchosen_concs.push(conc);
+		}else{
+			let conc:f64 = unchosen_side_product.powf(1.0/(unchosen_side[i].1 as f64*unchosen_num))*rand::thread_rng().gen_range(0.1,10.0);
+			unchosen_num-= unchosen_side[i].1 as f64;
+			unchosen_side_product/= conc;
+			unchosen_concs.push(conc);
+		};		
+	};
+	//Tail case.
+	if chosen_side[unchosen_side.len()-1].2==SOL {
+		unchosen_concs.push(rand::thread_rng().gen_range(min,max_conc));
+	}else{
+		unchosen_concs.push(unchosen_side_product);
+	};
+	
+	
+	//Correct everything to 4sf.
+	for x in unchosen_concs.iter_mut() {*x = ff(4,*x).parse::<f64>().unwrap_or(*x);};
+	for x in chosen_concs.iter_mut() {*x = ff(4,*x).parse::<f64>().unwrap_or(*x);};
+	
+	let mut chosen_side_product = 1.0;
+	let mut unchosen_side_product = 1.0;
+	
+	//work out product of concentrations of products/reagents.
+	for (i,_) in chosen_side.iter().enumerate() {
+		chosen_side_product*= if chosen_side[i].2!=SOL {
+			chosen_concs[i].powf(chosen_side[i].1 as f64)
+		}else{
+			1.0
+		};
+	};
+	
+	//work out product of concentrations of reagents/products.
+	for (i,_) in unchosen_side.iter().enumerate() {
+		unchosen_side_product*= if unchosen_side[i].2!=SOL {
+			unchosen_concs[i].powf(unchosen_side[i].1 as f64)
+		}else{
+			1.0
+		};
+	};
+	
+	//Get new keq based on imaginary values.
+	let keq = if products {chosen_side_product/unchosen_side_product}
+			  else {unchosen_side_product/chosen_side_product};
+	
+	//Write question text.
+	question.push_str("Consider the following reaction:\n");
+	question.push_str(&reaction.draw_with_state());
+	question.push_str("\nWhat is the Keq if the reagent and product concentrations are as follows:\n");
+	
+	for i in 0..reaction.reagents.len() {
+		question.push_str(
+			&format!(
+				"[{}] = {}mol/L\n",
+				reaction.reagents[i].0,
+				if products {unchosen_concs[i]}else{chosen_concs[i]}
+			)
+		);
+	};
+	
+	for i in 0..reaction.products.len() {
+		question.push_str(
+			&format!(
+				"[{}] = {}mol/L\n",
+				reaction.products[i].0,
+				if !products {unchosen_concs[i]}else{chosen_concs[i]}
+			)
+		);
+	};
+	
+	//Write question text.
+	answer.push_str(&reaction.draw_eq_equation());
+	answer.push_str(&format!("\nTherefore Keq = {}\n",dis(keq)));
+	
+	//Reminder if there is a solid reagent.
+	let mut solids = false;
+	for x in chosen_side.iter() {if x.2==SOL {solids = true;};};
+	for x in unchosen_side.iter() {if x.2==SOL {solids = true;};};
+	
+	if solids {answer.push_str("Remember, solids have an activity of 1.");};
+	
+	(question,answer)
+}
 		
 
 //HOUSEKEEPING FUNCTIONS. BOILERPLATE FORMATTING. KEEP OUT.
@@ -4136,6 +4346,24 @@ pub fn create_reaction_lib()->Vec<Reaction> {
 						   ("H\u{2082}O".to_owned(),2,LIQ)
 						  ],
 			eq: DeltaH(-572.0),
+		},
+		Reaction {
+			reagents: vec![("Succinate".to_owned(),1,AQU),
+						   ("FAD".to_owned(),1,AQU)
+						  ],
+			products: vec![
+						   ("Fumarate".to_owned(),1,AQU),
+						   ("FADH\u{2082}".to_owned(),1,AQU)
+						  ],
+			eq: Keq(1.5),
+		},
+		Reaction {
+			reagents: vec![("G3P".to_owned(),1,AQU),
+						  ],
+			products: vec![
+						   ("DHAP".to_owned(),1,AQU)
+						  ],
+			eq: Keq(22.0),
 		}
 	]
 }

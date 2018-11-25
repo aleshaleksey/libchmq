@@ -171,6 +171,7 @@ impl Reaction {
 		output
 	}
 	
+	//Draw a basic reaction with enthalpy and state symbols.
 	pub fn draw_with_hs(&self)->String {
 		let mut output = self.draw_with_state();
 		
@@ -183,6 +184,17 @@ impl Reaction {
 	}
 	
 	
+	//Draw an equilibrium equation for a reaction.
+	pub fn draw_eq_equation(&self)->String {
+		let mut output = String::with_capacity(1000);
+		
+		output.push_str("Keq = (");
+		for x in self.products.iter() { output.push_str(&format!("[{}]^({})",x.0,x.1)); };
+		output.push_str(") / (");
+		for x in self.reagents.iter() { output.push_str(&format!("[{}]^({})",x.0,x.1)); };
+		output.push(')');
+		output
+	}
 }
 
 //A trype that exists specifically to convert a JSON imported compound
