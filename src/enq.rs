@@ -4243,7 +4243,7 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	if chosen_side[unchosen_side.len()-1].2==SOL {
 		unchosen_concs.push(rand::thread_rng().gen_range(min,max_conc));
 	}else{
-		unchosen_concs.push(unchosen_side_product);
+		unchosen_concs.push(unchosen_side_product.powf(1.0/unchosen_side[unchosen_side.len()-1].1 as f64));
 	};
 	
 	
@@ -4364,7 +4364,18 @@ pub fn create_reaction_lib()->Vec<Reaction> {
 						   ("DHAP".to_owned(),1,AQU)
 						  ],
 			eq: Keq(22.0),
-		}
+		},
+		Reaction {
+			reagents: vec![("A".to_owned(),1,SOL),
+						   ("B".to_owned(),2,AQU),
+						   ("C".to_owned(),3,AQU)
+						  ],
+			products: vec![("E".to_owned(),5,SOL),
+						   ("D".to_owned(),2,AQU),
+						   ("F".to_owned(),3,GAS)
+						  ],
+			eq: Keq(1.5),
+		},
 	]
 }
 #[allow(unused_assignments)]
