@@ -4192,7 +4192,7 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	//Generate concentration totals between 1mM-5M.
 	//NB for whichever is more abundant.
 	let sum_concs:f64 = rand::thread_rng().gen_range(1,5001) as f64/1000.0;
-	let products = if keq>1.0 {true}else{false};
+	let products = if rand::thread_rng().gen_range(0,200)>99 {true}else{false};
 	
 	//generate max_conc of a single product.
 	let chosen_side = if products {&reaction.products}else{&reaction.reagents};
@@ -4314,7 +4314,205 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	
 	(question,answer)
 }
+	
+	
+//Get equilibrium concentration from Keq and initial concs.
+//This will get quite complex because we have several cases.
+//1) 2 or less products/reagents, no solids.
+//2) 2 or more products/reagents, but equal powers above and below (rootable!)
+//3) Case 1 + solids. (solids calculated seperately).
+//4) Case 2 + solids. (solids calculated seperately).
+//The solutions to other cases are too complex to cover in this kind of question.
+pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
+	let (mut q,mut a) = (String::with_capacity(1000),String::with_capacity(1000));
+	let enthalpic_error = ("Nothing to see here.".to_owned(),"Proceed to next question".to_owned());
+	
+	let mut keq_reactions = Vec::with_capacity(reactions.len());
+	
+	//Get reactions where keq is used.
+	for x in reactions.iter() {
+		match x.eq {
+			Keq(_) => {
+				let r_num = x.reagents.iter().fold(0,|ac,r| if r.2!=SOL {ac + r.1}else{ac} );
+				let p_num = x.products.iter().fold(0,|ac,p| if p.2!=SOL {ac + p.1}else{ac} );
+				if ( (r_num>0) & (p_num>0) ) 
+				 & ( (r_num==p_num) | ((r_num<3) & (p_num<3)) )
+				{keq_reactions.push(x);};
+			},
+			_		  => {},
+		};
+	};
+	
+	//Exit if library has no enthalpy based questions.
+	if keq_reactions.len()==0 {
+		return enthalpic_error
+	};
+	
+	let reaction:&Reaction = keq_reactions[rand::thread_rng().gen_range(0,keq_reactions.len())];
+	
+	//Get Keq - NB, this needs to be recalculated at the end.
+	//Also this is unnecessary due to previous safety check, but never mind.
+	let mut keq:f64 = match reaction.eq {
+		Keq(x) => {ff(4,x*rand::thread_rng().gen_range(0.5,1.5)).parse().unwrap_or(x)},
+		_	   => {return enthalpic_error;},
+	};
+	
+	//get the total powers of reagents and products.
+	let r_num = reaction.reagents.iter().fold(0,|ac,r| if r.2!=SOL {ac + r.1}else{ac} );
+	let p_num = reaction.products.iter().fold(0,|ac,p| if p.2!=SOL {ac + p.1}else{ac} );
+	
+	//Generate concentration totals between 1mM-5M.
+	//NB for whichever is more abundant.
+	let sum_concs:f64 = rand::thread_rng().gen_range(1,5001) as f64/5000.0;
+	let products = if rand::thread_rng().gen_range(0,200)>99 {true}else{false};
+	
+	//generate max_conc of a single product and numbers by side sorted.
+	let init_side = if products {&reaction.products}else{&reaction.reagents};
+	let zero_side = if products {&reaction.reagents}else{&reaction.products};
+	
+	let init_num = if products {p_num}else{r_num};
+	let zero_num = if products {r_num}else{p_num};
+	
+	let mut init_concs = Vec::new();
+	let mut in_init_concs = Vec::new();
+	let mut zero_concs = Vec::new();
+	let mut x;
+	
+	//case more than squared, but same number.
+	if (r_num>2) & (p_num==r_num) {
+		let keq_root = keq.powf(1.0/r_num as f64);
+		let mut conc_init = sum_concs/r_num as f64; //NB this is concentration of abstract component, not compound.
+		conc_init = ff(4,conc_init).parse().unwrap_or(conc_init);
 		
+		x = if !products { keq_root*conc_init/(1.0+keq_root) }
+				else	 { conc_init/(1.0+keq_root) };
+				
+		for i in 0..init_side.len() {init_concs.push(conc_init.powf(init_side[i].1 as f64));};
+		for i in 0..zero_side.len() {zero_concs.push(conc_init.powf(zero_side[i].1 as f64));};		
+		
+	//case of squared or less.
+	}else if (r_num<3) & (p_num<3) {
+		//work out product of concentrations of initial side.
+		//and *final* concentrations. (Easier this way).
+		let mut init_side_product = 1.0;
+		let max_conc = sum_concs/init_side.len() as f64;
+		let min = max_conc/1000.0;
+		
+		for (i,_) in init_side.iter().enumerate() {
+			let mut conc:f64 = rand::thread_rng().gen_range(min,max_conc);
+			conc = ff(4,conc).parse().unwrap_or(conc);
+			
+			init_concs.push(conc);
+			init_side_product*= if init_side[i].2!=SOL {
+				conc.powf(init_side[i].1 as f64)
+			}else{
+				1.0
+			};
+		};
+		
+		//determine final product of zero side.
+		let zero_side_product = if !products {
+			keq*init_side_product
+		}else{
+			init_side_product/keq
+		};
+		
+		//determine x.
+		x = zero_side_product.powf(1.0/zero_num as f64);
+		
+		//get final concentrations.
+		for cmp in zero_side.iter() {zero_concs.push(x*cmp.1 as f64);};
+	}else{
+		return enthalpic_error;
+	};
+	
+	//correct initial concentrations to true initial concentrations.
+	for (i,conc) in init_concs.iter().enumerate() {in_init_concs.push(*conc+x*init_side[i].1 as f64);};	
+	
+	//Initial concs are all exact. Thus only final concs need reworked.
+	for x in zero_concs.iter_mut() {*x = ff(4,*x).parse().unwrap_or(*x);};
+	
+	//work out products of concentrations (as prelude to recalculating the keq.
+	let zero_prod = zero_concs.iter().zip(zero_side.iter()).fold(
+		1.0,|ac,(conc,cmp)|
+		if cmp.2!=SOL {ac*conc.powf(cmp.1 as f64)}else{ac}
+	);
+	
+	x = zero_prod.powf(1.0/zero_num as f64);
+	
+	//Write question text.
+	q.push_str("Consider the following reaction:\n");
+	q.push_str(&reaction.draw_with_state());
+	q.push_str(&format!("\nWhat the are the equilibrium \
+concentrations of reagents and products if \
+Keq = {} and initial concentrations are as follows:\n",keq));
+	
+	for i in 0..reaction.reagents.len() {
+		q.push_str(
+			&format!(
+				"[{}] = {}mol/L\n",
+				reaction.reagents[i].0,
+				if products {"0.0 ".to_owned()}else{dis(in_init_concs[i])}
+			)
+		);
+	};
+	
+	for i in 0..reaction.products.len() {
+		q.push_str(
+			&format!(
+				"[{}] = {}mol/L\n",
+				reaction.products[i].0,
+				if !products {"0.0 ".to_owned()}else{dis(in_init_concs[i])}
+			)
+		);
+	};
+	
+	//write answer.
+	a.push_str("The equilibrium equation for this reaction looks like this:\n");
+	a.push_str(&reaction.draw_eq_equation());
+	a.push_str("\nEquilibrium concentrations would thus look like this:\n");
+	a.push_str("Keq = ");
+	
+	if !products {
+		for c in zero_side.iter() {if c.2!=SOL {a.push_str(&format!("x^({})",c.1))};};
+		a.push_str(" / ");
+		for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
+			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,c.powf(1.0/(cmp.1 as f64))),cmp.1))};
+		};
+	}else{
+		for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
+			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,c.powf(1.0/(cmp.1 as f64))),cmp.1))};
+		};
+		a.push_str(" / ");
+		for c in zero_side.iter() {if c.2!=SOL {a.push_str(&format!("x^({})",c.1))};};
+	};
+	if r_num==p_num {a.push_str(&format!("\nPut both sides of the equation to the power of {} and... ",r_num));};
+	a.push_str("Solve for x. Use x to work out individual concentrations. Thus:\n");
+	a.push_str(&format!("x = {}\n",x));
+	
+	for i in 0..reaction.reagents.len() {
+		a.push_str(
+			&format!(
+				"[{}] = {}mol/L\n",
+				reaction.reagents[i].0,
+				if products {dis(zero_concs[i])}else{dis(init_concs[i])}
+			)
+		);
+	};
+	
+	for i in 0..reaction.products.len() {
+		a.push_str(
+			&format!(
+				"[{}] = {}mol/L\n",
+				reaction.products[i].0,
+				if !products {dis(zero_concs[i])}else{dis(init_concs[i])}
+			)
+		);
+	};
+	
+	//NB: Need to write answer.
+	(q,a)
+}	
 
 //HOUSEKEEPING FUNCTIONS. BOILERPLATE FORMATTING. KEEP OUT.
 //HOUSEKEEPING FUNCTIONS. BOILERPLATE FORMATTING. KEEP OUT.
