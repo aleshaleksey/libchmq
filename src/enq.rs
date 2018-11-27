@@ -4191,7 +4191,7 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	
 	//Generate concentration totals between 1mM-5M.
 	//NB for whichever is more abundant.
-	let sum_concs:f64 = rand::thread_rng().gen_range(1,5001) as f64/1000.0;
+	let sum_concs:f64 = rand::thread_rng().gen_range(1,5001) as f64/5000.0;
 	let products = if rand::thread_rng().gen_range(0,200)>99 {true}else{false};
 	
 	//generate max_conc of a single product.
@@ -4206,11 +4206,11 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	let min = max_conc/1000.0;
 	
 	//work out product of concentrations of products/reagents.
-	for (i,_) in chosen_side.iter().enumerate() {
+	for cmp in chosen_side.iter() {
 		let conc:f64 = rand::thread_rng().gen_range(min,max_conc);
 		chosen_concs.push(conc);
-		chosen_side_product*= if chosen_side[i].2!=SOL {
-			conc.powf(chosen_side[i].1 as f64)
+		chosen_side_product*= if cmp.2!=SOL {
+			conc.powf(cmp.1 as f64)
 		}else{
 			1.0
 		};
@@ -4229,7 +4229,7 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	);
 	//work out reagent concentrations.
 	for i in 0..(unchosen_side.len()-1) {
-		if chosen_side[i].2==SOL {
+		if unchosen_side[i].2==SOL {
 			let conc:f64 = rand::thread_rng().gen_range(min,max_conc);
 			unchosen_concs.push(conc);
 		}else{
@@ -4240,7 +4240,7 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 		};		
 	};
 	//Tail case.
-	if chosen_side[unchosen_side.len()-1].2==SOL {
+	if unchosen_side[unchosen_side.len()-1].2==SOL {
 		unchosen_concs.push(rand::thread_rng().gen_range(min,max_conc));
 	}else{
 		unchosen_concs.push(unchosen_side_product.powf(1.0/unchosen_side[unchosen_side.len()-1].1 as f64));
@@ -4286,7 +4286,7 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 			&format!(
 				"[{}] = {}mol/L\n",
 				reaction.reagents[i].0,
-				if products {unchosen_concs[i]}else{chosen_concs[i]}
+				if products {dis(unchosen_concs[i])}else{dis(chosen_concs[i])}
 			)
 		);
 	};
@@ -4296,14 +4296,14 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 			&format!(
 				"[{}] = {}mol/L\n",
 				reaction.products[i].0,
-				if !products {unchosen_concs[i]}else{chosen_concs[i]}
+				if !products {dis(unchosen_concs[i])}else{dis(chosen_concs[i])}
 			)
 		);
 	};
 	
 	//Write question text.
 	answer.push_str(&reaction.draw_eq_equation());
-	answer.push_str(&format!("\nTherefore Keq = {}\n",dis(keq)));
+	answer.push_str(&format!("\nTherefore Keq = {}\n",ff(4,keq)));
 	
 	//Reminder if there is a solid reagent.
 	let mut solids = false;
@@ -4352,7 +4352,7 @@ pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
 	
 	//Get Keq - NB, this needs to be recalculated at the end.
 	//Also this is unnecessary due to previous safety check, but never mind.
-	let mut keq:f64 = match reaction.eq {
+	let keq:f64 = match reaction.eq {
 		Keq(x) => {ff(4,x*rand::thread_rng().gen_range(0.5,1.5)).parse().unwrap_or(x)},
 		_	   => {return enthalpic_error;},
 	};
@@ -4384,11 +4384,11 @@ pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
 		let mut conc_init = sum_concs/r_num as f64; //NB this is concentration of abstract component, not compound.
 		conc_init = ff(4,conc_init).parse().unwrap_or(conc_init);
 		
-		x = if !products { keq_root*conc_init/(1.0+keq_root) }
-				else	 { conc_init/(1.0+keq_root) };
+		x = if !products { keq_root*conc_init }
+				else	 { conc_init/keq_root };
 				
-		for i in 0..init_side.len() {init_concs.push(conc_init.powf(init_side[i].1 as f64));};
-		for i in 0..zero_side.len() {zero_concs.push(conc_init.powf(zero_side[i].1 as f64));};		
+		for i in 0..init_side.len() {init_concs.push(conc_init);};
+		for i in 0..zero_side.len() {zero_concs.push(x);};		
 		
 	//case of squared or less.
 	}else if (r_num<3) & (p_num<3) {
@@ -4421,13 +4421,13 @@ pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
 		x = zero_side_product.powf(1.0/zero_num as f64);
 		
 		//get final concentrations.
-		for cmp in zero_side.iter() {zero_concs.push(x*cmp.1 as f64);};
+		for cmp in zero_side.iter() {zero_concs.push(x);};
 	}else{
 		return enthalpic_error;
 	};
 	
 	//correct initial concentrations to true initial concentrations.
-	for (i,conc) in init_concs.iter().enumerate() {in_init_concs.push(*conc+x*init_side[i].1 as f64);};	
+	for (i,conc) in init_concs.iter().enumerate() {in_init_concs.push(*conc+x);};	
 	
 	//Initial concs are all exact. Thus only final concs need reworked.
 	for x in zero_concs.iter_mut() {*x = ff(4,*x).parse().unwrap_or(*x);};
@@ -4477,17 +4477,17 @@ Keq = {} and initial concentrations are as follows:\n",keq));
 		for c in zero_side.iter() {if c.2!=SOL {a.push_str(&format!("x^({})",c.1))};};
 		a.push_str(" / ");
 		for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
-			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,c.powf(1.0/(cmp.1 as f64))),cmp.1))};
+			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,*c),cmp.1))};
 		};
 	}else{
 		for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
-			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,c.powf(1.0/(cmp.1 as f64))),cmp.1))};
+			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,*c),cmp.1))};
 		};
 		a.push_str(" / ");
 		for c in zero_side.iter() {if c.2!=SOL {a.push_str(&format!("x^({})",c.1))};};
 	};
-	if r_num==p_num {a.push_str(&format!("\nPut both sides of the equation to the power of {} and... ",r_num));};
-	a.push_str("Solve for x. Use x to work out individual concentrations. Thus:\n");
+	if (r_num>2) & (p_num==r_num) {a.push_str(&format!("\nPut both sides of the equation to the power of {} and... ",r_num));};
+	a.push_str("\nSolve for x. Use x to work out individual concentrations. Thus:\n");
 	a.push_str(&format!("x = {}\n",x));
 	
 	for i in 0..reaction.reagents.len() {
@@ -4527,7 +4527,8 @@ Keq = {} and initial concentrations are as follows:\n",keq));
 
 pub fn create_reaction_lib()->Vec<Reaction> {
 	vec![
-		Reaction {
+		//Reactions with Enthalpy.
+		Reaction { //combustion of methane.
 			reagents: vec![("O\u{2082}".to_owned(),2,GAS),
 						   ("CH\u{2084}".to_owned(),1,GAS)
 						  ],
@@ -4536,7 +4537,25 @@ pub fn create_reaction_lib()->Vec<Reaction> {
 						  ],
 			eq: DeltaH(-891.0),
 		},
-		Reaction {
+		Reaction { //oxidation of methane to CO.
+			reagents: vec![("H\u{2082}O".to_owned(),1,GAS),
+						   ("CH\u{2084}".to_owned(),1,GAS)
+						  ],
+			products: vec![("CO".to_owned(),1,GAS),
+						   ("H\u{2082}".to_owned(),3,GAS)
+						  ],
+			eq: DeltaH(210.0),
+		},
+		Reaction { //oxidation sulphur dioxide
+			reagents: vec![("SO\u{2082}".to_owned(),2,GAS),
+						   ("O\u{2082}".to_owned(),1,GAS)
+						  ],
+			products: vec![
+						   ("SO\u{2083}".to_owned(),2,GAS)
+						  ],
+			eq: DeltaH(-98.0),
+		},
+		Reaction { //combustion of hydrogen
 			reagents: vec![("H\u{2082}".to_owned(),2,GAS),
 						   ("O\u{2082}".to_owned(),1,GAS)
 						  ],
@@ -4545,7 +4564,19 @@ pub fn create_reaction_lib()->Vec<Reaction> {
 						  ],
 			eq: DeltaH(-572.0),
 		},
-		Reaction {
+		Reaction { //oxidation of ammonia
+			reagents: vec![("NH\u{2083}".to_owned(),4,GAS),
+						   ("O\u{2082}".to_owned(),5,GAS)
+						  ],
+			products: vec![
+						   ("NO".to_owned(),4,GAS),
+						   ("H\u{2082}O".to_owned(),6,LIQ)
+						  ],
+			eq: DeltaH(-908.0),
+		},
+		//
+		//Reactions with Equilibrium Constant.
+		Reaction { //Succinate to fumerate oxidation.
 			reagents: vec![("Succinate".to_owned(),1,AQU),
 						   ("FAD".to_owned(),1,AQU)
 						  ],
@@ -4555,7 +4586,45 @@ pub fn create_reaction_lib()->Vec<Reaction> {
 						  ],
 			eq: Keq(1.5),
 		},
-		Reaction {
+		Reaction { //Chlorination of ethane.
+			reagents: vec![("C\u{2082}H\u{2086}".to_owned(),1,GAS),
+						   ("Cl\u{2082}".to_owned(),1,GAS)
+						  ],
+			products: vec![
+						   ("C\u{2082}H\u{2085}Cl".to_owned(),1,SOL),
+						   ("HCl".to_owned(),1,GAS)
+						  ],
+			eq: Keq(0.1),
+		},
+		Reaction { //Condensation to Sucrose.
+			reagents: vec![("UDP-Glucose".to_owned(),1,AQU),
+						   ("Fructose".to_owned(),1,AQU)
+						  ],
+			products: vec![
+						   ("UDP".to_owned(),1,AQU),
+						   ("Sucrose".to_owned(),1,AQU)
+						  ],
+			eq: Keq(1.6),
+		},
+		Reaction { //Creatine phosphorylation (backwards).
+			reagents: vec![("Creatine".to_owned(),1,AQU),
+						   ("ATP".to_owned(),1,AQU)
+						  ],
+			products: vec![
+						   ("Creatine-Pi".to_owned(),1,AQU),
+						   ("ADP".to_owned(),1,AQU)
+						  ],
+			eq: Keq(0.04),
+		},
+		Reaction { //Isomerisation of glucose.
+			reagents: vec![("UDP-Glucose".to_owned(),1,AQU)
+						  ],
+			products: vec![
+						   ("UDP-Galactose".to_owned(),1,AQU)
+						  ],
+			eq: Keq(0.33),
+		},
+		Reaction {//Glycolysis step
 			reagents: vec![("G3P".to_owned(),1,AQU),
 						  ],
 			products: vec![
@@ -4563,7 +4632,16 @@ pub fn create_reaction_lib()->Vec<Reaction> {
 						  ],
 			eq: Keq(22.0),
 		},
-		Reaction {
+		Reaction {//Citric acid cycle step
+			reagents: vec![("C\u{2084}H\u{2084}O\u{2084}".to_owned(),1,AQU),
+						   ("H\u{2082}O".to_owned(),2,LIQ)
+						  ],
+			products: vec![
+						   ("C\u{2084}H\u{2086}O\u{2085}".to_owned(),1,AQU)
+						  ],
+			eq: Keq(4.03),
+		},
+		Reaction { //Complex test reaction.
 			reagents: vec![("A".to_owned(),1,SOL),
 						   ("B".to_owned(),2,AQU),
 						   ("C".to_owned(),3,AQU)
