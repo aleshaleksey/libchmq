@@ -280,6 +280,18 @@ pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->
 	
 	(q,a,h,mh)
 }
+
+//Function to generate question for equilibrium (REACTION).
+//Attempt at a very generic fucntion indeed.
+pub fn generate_r_questions(lib:&Vec<Reaction>,questions:Vec<&Fn(&Vec<Reaction>)->(String,String)>,lang:u8)->(String,String,String,String) {
+	
+	let r_ind = rand::thread_rng().gen_range(0,questions.len());
+	let (q,a):(String,String) = questions[r_ind](lib).sscri(lang); 
+	
+	let (h,mh):(String,String) = (String::new(),String::new());
+	
+	(q,a,h,mh)
+}
  
 //function to convert state symbol to text.
 fn state_const_match(con:u8)->String {
