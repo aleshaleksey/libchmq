@@ -74,6 +74,16 @@ use libchmq::{enq,czq};
 		println!("Answer:\n{}\n",a);
 		assert!(true,true);
 	}
+	
+	#[test]
+	pub fn q_5_2() {
+		let reactions = enq::create_reaction_lib();
+		let (q,a) = enq::q_5_2(&reactions);
+		
+		println!("\nQuestion:\n{}\n\n",q);
+		println!("Answer:\n{}\n",a);
+		assert!(true,true);
+	}
 
 	#[test]
 	pub fn enq_1_0(){
