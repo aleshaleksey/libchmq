@@ -84,6 +84,31 @@ use libchmq::{enq,czq};
 		println!("Answer:\n{}\n",a);
 		assert!(true,true);
 	}
+	
+	#[test]
+	//test to test every reaction with every question.
+	pub fn full_equilibrium_battery() {
+		let mut reactions = enq::create_reaction_lib();
+		
+		for x in reactions.into_iter() {
+			let reactions = vec![x];
+			
+			let (q,a) = enq::q_5_0_pressure(&reactions);
+			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
+			
+			let (q,a) = enq::q_5_0_enthalpy(&reactions);
+			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
+			
+			let (q,a) = enq::q_5_1(&reactions);
+			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
+			
+			let (q,a) = enq::q_5_2(&reactions);
+			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
+		};
+		
+		assert!(true,true);
+	}
+			
 
 	#[test]
 	pub fn enq_1_0(){
