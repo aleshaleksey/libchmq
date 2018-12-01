@@ -195,6 +195,25 @@ impl Reaction {
 		output.push(')');
 		output
 	}
+	//Draw an equilibrium equation for a reaction.
+	pub fn draw_eq_equation_activity(&self)->String {
+		let mut output = String::with_capacity(1000);
+		
+		output.push_str("Keq = (");
+		for x in self.products.iter() {
+			if x.2!=SOL {
+				output.push_str(&format!("[{}]^({})",x.0,x.1));
+			};
+		};
+		output.push_str(") / (");
+		for x in self.reagents.iter() {
+			if x.2!=SOL {
+				output.push_str(&format!("[{}]^({})",x.0,x.1));
+			};
+		};
+		output.push(')');
+		output
+	}
 }
 
 //A trype that exists specifically to convert a JSON imported compound

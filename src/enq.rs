@@ -4065,17 +4065,42 @@ pub fn q_7_3b(compounds:&Vec<Compound>)->(String,String){
 //Will it go left or right.
 pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 	let (mut question,mut answer) = (String::with_capacity(500),String::with_capacity(500));
+	let enthalpic_error = ("Nothing to see here.".to_owned(),"Proceed to next question".to_owned());
+	
+	let mut pressure_reactions = Vec::with_capacity(reaction_lib.len());
+	
+	//Get reactions where enthalpy is used.
+	'analyse_rection_states: for reaction in reaction_lib.iter() {
+		for reagent in reaction.reagents.iter() {
+			if reagent.2==GAS {
+				pressure_reactions.push(reaction);
+				continue 'analyse_rection_states;
+			};
+		};
+		for product in reaction.products.iter() {
+			if product.2==GAS {
+				pressure_reactions.push(reaction);
+				continue 'analyse_rection_states;
+			};
+		};		
+	};
+	
+	//Exit if library has no enthalpy based questions.
+	if pressure_reactions.len()==0 {
+		return enthalpic_error
+	};
+	
 	
 	//Pick 
-	let reaction = &reaction_lib[rand::thread_rng().gen_range(0,reaction_lib.len())];
+	let reaction = &pressure_reactions[rand::thread_rng().gen_range(0,pressure_reactions.len())];
 	
 	//Write question.
 	let increase = if rand::thread_rng().gen_range(0,200)>99 {true}else{false};
 	let change = if increase {"increases"}else{"decreases"};
 	
-	question.push_str("Consider the following reaction:\n");
+	question.push_str("Consider the following reaction:\n\n");
 	question.push_str(&reaction.draw_with_state());
-	question.push_str(&format!("\nIn which direction will the equilibrium shift if the pressure {}?",change));
+	question.push_str(&format!("\n\nIn which direction will the equilibrium shift if the pressure {}?",change));
 	
 	//work out the answer.
 	let mut reagent_nums = 0;
@@ -4132,9 +4157,9 @@ pub fn q_5_0_enthalpy(reactions:&Vec<Reaction>)->(String,String) {
 	let increase = if rand::thread_rng().gen_range(0,200)>99 {true}else{false};
 	let change = if increase {"increases"}else{"decreases"};
 	
-	question.push_str("Consider the following reaction:\n");
+	question.push_str("Consider the following reaction:\n\n");
 	question.push_str(&reaction.draw_with_hs());
-	question.push_str(&format!("\nIn which direction will the equilibrium shift if the temperature {}?",change));
+	question.push_str(&format!("\n\nIn which direction will the equilibrium shift if the temperature {}?",change));
 	
 	let (enth,enth_num) = match reaction.eq {
 		DeltaH (x) => {(dis(x),x)},
@@ -4277,9 +4302,10 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 			  else {unchosen_side_product/chosen_side_product};
 	
 	//Write question text.
-	question.push_str("Consider the following reaction:\n");
+	question.push_str("Consider the following reaction:\n\n");
 	question.push_str(&reaction.draw_with_state());
-	question.push_str("\nWhat is the Keq if the reagent and product concentrations are as follows:\n");
+	question.push_str("\n\nWhat is the Keq if the reagent and product concentrations are as follows:\n\n");
+	
 	
 	for i in 0..reaction.reagents.len() {
 		question.push_str(
@@ -4302,8 +4328,8 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	};
 	
 	//Write question text.
-	answer.push_str(&reaction.draw_eq_equation());
-	answer.push_str(&format!("\nTherefore Keq = {}\n",ff(4,keq)));
+	answer.push_str(&reaction.draw_eq_equation_activity());
+	answer.push_str(&format!("\n\nTherefore Keq = {}\n",ff(4,keq)));
 	
 	//Reminder if there is a solid reagent.
 	let mut solids = false;
@@ -4441,11 +4467,11 @@ pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
 	x = zero_prod.powf(1.0/zero_num as f64);
 	
 	//Write question text.
-	q.push_str("Consider the following reaction:\n");
+	q.push_str("Consider the following reaction:\n\n");
 	q.push_str(&reaction.draw_with_state());
-	q.push_str(&format!("\nWhat the are the equilibrium \
+	q.push_str(&format!("\n\nWhat the are the equilibrium \
 concentrations of reagents and products if \
-Keq = {} and initial concentrations are as follows:\n",keq));
+Keq = {} and initial concentrations are as follows:\n\n",keq));
 	
 	for i in 0..reaction.reagents.len() {
 		q.push_str(
@@ -4468,26 +4494,37 @@ Keq = {} and initial concentrations are as follows:\n",keq));
 	};
 	
 	//write answer.
-	a.push_str("The equilibrium equation for this reaction looks like this:\n");
-	a.push_str(&reaction.draw_eq_equation());
-	a.push_str("\nEquilibrium concentrations would thus look like this:\n");
+	a.push_str("The equilibrium equation for this reaction looks like this:\n\n");
+	a.push_str(&reaction.draw_eq_equation_activity());
+	a.push_str("\n\nEquilibrium concentrations would thus look like this:\n\n");
 	a.push_str("Keq = ");
 	
 	if !products {
-		for c in zero_side.iter() {if c.2!=SOL {a.push_str(&format!("x^({})",c.1))};};
+		a.push_str(&format!("x^({})",zero_num));
 		a.push_str(" / ");
-		for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
-			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,*c),cmp.1))};
+		//A little complication because of powers and roots.
+		if (r_num>2) & (p_num==r_num) {
+			a.push_str(&format!("({}-x)^({})",ff(4,init_concs[0]),init_num));
+		}else{
+			for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
+				if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,*c),cmp.1))};
+			};
 		};
 	}else{
-		for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
-			if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,*c),cmp.1))};
+		//A little complication because of powers and roots.
+		if (r_num>2) & (p_num==r_num) {
+			a.push_str(&format!("({}-x)^({})",ff(4,init_concs[0]),init_num));
+		}else{
+			for (c,cmp) in in_init_concs.iter().zip(init_side.iter()) {
+				if cmp.2!=SOL {a.push_str(&format!("({}-x)^({})",ff(4,*c),cmp.1))};
+			};
 		};
 		a.push_str(" / ");
-		for c in zero_side.iter() {if c.2!=SOL {a.push_str(&format!("x^({})",c.1))};};
+		a.push_str(&format!("x^({})",zero_num));
 	};
-	if (r_num>2) & (p_num==r_num) {a.push_str(&format!("\nPut both sides of the equation to the power of {} and... ",r_num));};
-	a.push_str("\nSolve for x. Use x to work out individual concentrations. Thus:\n");
+	a.push('\n');
+	if (r_num>2) & (p_num==r_num) {a.push_str(&format!("\nPut both sides of the equation to the power of 1/{} and... ",r_num));};
+	a.push_str("\nSolve for x. Use x to work out individual concentrations. Thus:\n\n");
 	a.push_str(&format!("x = {}\n",x));
 	
 	for i in 0..reaction.reagents.len() {
