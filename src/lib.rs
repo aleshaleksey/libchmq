@@ -1,13 +1,5 @@
 ///The central module of libchmq.
 
-
-// compiles with :
-//	cargo rustc --release --features="libc" --target=arm-linux-androideabi -- -C linker="/home/alesha/NDK/arm/bin/arm-linux-androideabi-clang" --crate-type="cdylib"
-//	cargo rustc --release --features="libc" --target=x86_64-linux-android  -- -C linker="/home/alesha/NDK/x86_64/bin/x86_64-linux-android-clang" --crate-type="cdylib"
-//	cargo rustc --release --features="libc" --target=aarch64-linux-android -- -C linker="/home/alesha/NDK/arm64/bin/aarch64-linux-android-clang" --crate-type="cdylib"
-
-
-
 #[cfg(target_os = "android")]extern crate libc;
 #[cfg(target_os = "android")]extern crate jni;
 #[macro_use]extern crate serde_derive;
