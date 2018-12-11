@@ -666,11 +666,31 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 		};
 	};
 	
+	//change (1-) and (1+) to (+) and (-)
+	out_a = discharge_ones(out_a);
+	out_a = form_root_unsup(out_a);
+	
 	//second pass for charges. This is probably faster than the other way.
+	//also some ridiculous preconditions.
 	println!("count of chars in out_a = {}",out_a.chars().count());
 	let mut supping = false;
 	for i in 0..out_a.chars().count() {
-		if (out_a.chars().nth(i)==Some('(')) //if start of block, place "<sup>" in place of "("
+		
+		
+		if //if space followed by (#+) skip this char 
+		(out_a.chars().nth(i)==Some(' '))
+		& (out_a.chars().nth(i+1)==Some('(')) //if start of block, place "<sup>" in place of "("
+		& (
+			(((out_a.chars().nth(i+2)==Some('+'))|(out_a.chars().nth(i+2)==Some('-')))
+				& (out_a.chars().nth(i+3)==Some(')'))
+			)
+			| (((out_a.chars().nth(i+3)==Some('+'))|(out_a.chars().nth(i+3)==Some('-')))
+				& (out_a.chars().nth(i+4)==Some(')'))
+			)
+		){
+		//literally skip
+		}else if  //if start of block, place "<sup>" in place of "("
+		(out_a.chars().nth(i)==Some('('))
 		& (
 			(((out_a.chars().nth(i+1)==Some('+'))|(out_a.chars().nth(i+1)==Some('-')))
 				& (out_a.chars().nth(i+2)==Some(')'))
@@ -681,7 +701,8 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 		) {
 			out.push_str("<sup>");
 			supping = true;
-		}else if (out_a.chars().nth(i)==Some(')')) //if end of block, place "</sup>" in place of ")"
+		}else if //if end of block, place "</sup>" in place of ")"
+		(out_a.chars().nth(i)==Some(')')) 
 		& supping {
 			out.push_str("</sup>");
 			supping = false;
@@ -739,6 +760,73 @@ pub fn is_up(a:char)->bool{
 		if a==libb[i] {return true;};
 	};
 	false
+}
+
+//change (1-) and (1+) to (+) and (-)
+fn discharge_ones(inp:String)->String {
+	let mut out = String::with_capacity(inp.len());
+	
+	let mut detected = true;
+	for i in 0..inp.chars().count() {
+		
+		if (inp.chars().nth(i)==Some('('))
+		& (inp.chars().nth(i+1)==Some('1'))
+		& ((inp.chars().nth(i+2)==Some('+'))|(inp.chars().nth(i+2)==Some('-')))
+		& (inp.chars().nth(i+3)==Some(')')) {
+			detected = true;
+			match inp.chars().nth(i) {
+				Some(ch) => {out.push(ch);},
+				_		 => {},
+			};
+		}else if detected & (inp.chars().nth(i)==Some('1')) {
+			detected = false;
+		}else{
+			match inp.chars().nth(i) {
+				Some(ch) => {out.push(ch);},
+				_		 => {},
+			};
+		};
+
+	};
+	out
+}
+
+//if up to 99th√, put 99th in <sup> instead of superscript.
+//NB must be in superscript to start ff with.
+fn form_root_unsup(inp:String)->String {
+	
+	let mut output = String::with_capacity(inp.len());
+	
+	let mut in_superscript = false;
+	for i in 0..inp.chars().count() {
+		if !in_superscript
+		& (
+			((inp.chars().nth(i+1)==Some('√'))
+				& is_sup(inp.chars().nth(i).unwrap_or('!'))
+			)|((inp.chars().nth(i+2)==Some('√'))
+				& is_sup(inp.chars().nth(i+1).unwrap_or('!'))
+				& is_sup(inp.chars().nth(i).unwrap_or('!'))
+			)
+		){
+			in_superscript = true;
+			output.push_str("<sup>"); 
+			output.push(num_unsup(inp.chars().nth(i).unwrap()));
+		}else if in_superscript & is_sup(inp.chars().nth(i).unwrap_or('!')) {
+			output.push(num_unsup(inp.chars().nth(i).unwrap()));
+		}else if in_superscript & (inp.chars().nth(i)==Some('√')) {
+			output.push_str("</sup>"); 
+			output.push(inp.chars().nth(i).unwrap());
+			in_superscript = false;
+		}else{
+			match inp.chars().nth(i) {
+				Some(ch) => {output.push(ch);},
+				_		 => {},
+			};
+		};
+		
+	};
+	
+	output
 }
 
 //removes superscript ones which are on their own.
@@ -908,6 +996,23 @@ pub fn num_subs(inp:char)->char {
 }
 
 //Generates a structure for making subscripts.
+pub fn num_unsup(inp:char)->char {
+	match inp {
+		'\u{2070}'=>'0',
+		'\u{00B9}'=>'1',
+		'\u{00B2}'=>'2',
+		'\u{00B3}'=>'3',
+		'\u{2074}'=>'4',
+		'\u{2075}'=>'5',
+		'\u{2076}'=>'6',
+		'\u{2077}'=>'7',
+		'\u{2078}'=>'8',
+		'\u{2079}'=>'9',
+		_  => inp,
+	}
+}
+
+//Generates a structure for making subscripts.
 pub fn num_unsub(inp:char)->char {
 	match inp {
 		'\u{2080}'=>'0',
@@ -923,6 +1028,19 @@ pub fn num_unsub(inp:char)->char {
 		_  => inp,
 	}
 }
+
+//is number a superscript..
+pub fn is_sup(inp:char)->bool {
+	match inp {
+		'\u{2070}'=>true,
+		'\u{00B9}'=>true,
+		'\u{00B2}'=>true,
+		'\u{00B3}'=>true,
+		'\u{2074}'...'\u{2079}'=>true,
+		_  => false,
+	}
+}
+
 
 //find if number is a subscript.
 pub fn is_subscript(inp:char)->bool {
