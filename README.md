@@ -55,10 +55,14 @@ eg.
 let mut compounds = Vec::with_capacity(200);
 let compounds = libchmq::enq::create_compound_lib(compounds);
 
-//Generate text for a quesiton.
+//Generate text for a question.
 let (q,a) = libchmq::enq::q_1_0(&compounds).sscri(libchmq::EN);
 
+//Generate text for a question using html compatible subscript/superscript tags.
+let (q_html,a_html) = libchmq::enq::q_1_0(&compounds).sscri_html(libchmq::EN);
+
 println!("Question:\n{}\n\nAnswer:\n{}",q,a);
+println!("Now for html compatible subscripts/superscripts.\nQuestion:\n{}\n\nAnswer:\n{}",q_html,a_html);
 ```
 
 The text of a question can then be scanned with the "helper" function,
