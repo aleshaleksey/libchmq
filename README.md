@@ -97,10 +97,11 @@ let compounds = enq::create_compound_lib(compounds);
 
 //Generate a complete question, answer and help
 //choosing at random from q_3_0, q_3_1 or q_3_2.
+//NB SYMBOL uses special chracters. HTML uses <sup> & <sub> tags.
 let (q,a,help,data) = generate_questions(
     &compounds,
     vec![&enq::q_3_0,&enq::q_3_1,&enq::q_3_2],
-    EN
+    EN,SYMBOL
 );
 
 println!("Question:\n{}",q);
