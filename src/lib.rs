@@ -766,19 +766,21 @@ pub fn is_up(a:char)->bool{
 fn discharge_ones(inp:String)->String {
 	let mut out = String::with_capacity(inp.len());
 	
-	let mut detected = true;
+	let mut detected = false;
+	let mut count = 0;
 	for i in 0..inp.chars().count() {
-		
+		count+= 1;
 		if (inp.chars().nth(i)==Some('('))
 		& (inp.chars().nth(i+1)==Some('1'))
 		& ((inp.chars().nth(i+2)==Some('+'))|(inp.chars().nth(i+2)==Some('-')))
 		& (inp.chars().nth(i+3)==Some(')')) {
 			detected = true;
+			count = 0;
 			match inp.chars().nth(i) {
 				Some(ch) => {out.push(ch);},
 				_		 => {},
 			};
-		}else if detected & (inp.chars().nth(i)==Some('1')) {
+		}else if detected & (count==1) & (inp.chars().nth(i)==Some('1')) {
 			detected = false;
 		}else{
 			match inp.chars().nth(i) {
@@ -899,7 +901,7 @@ pub fn futile_ones(a:String)->String {
 	//do the work
 	for i in 0..(lena-1){
 		if (a.chars().nth(i)==Some('1'))
-		 & (lshash(dig.chars(),a.chars().nth(i+1).unwrap())){
+		 & lshash(dig.chars(),a.chars().nth(i+1).unwrap()){
 			 out.push(a.chars().nth(i).unwrap());
 		}else if a.chars().nth(i).unwrap()!='1'{
 			 out.push(a.chars().nth(i).unwrap());
@@ -944,7 +946,7 @@ pub fn a_to_an(lang:u8,a:String)->String {
 }
 
 pub fn futile_digits()->String{
-	"01234567890-+/=., \n\r)]:;".to_owned()
+	"01234567890-+/=., \n\r)]<:;".to_owned()
 }
 
 pub fn numbers()->Vec<char>{
