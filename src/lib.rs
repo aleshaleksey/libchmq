@@ -1,5 +1,13 @@
 ///The central module of libchmq.
 
+
+// compiles with :
+//	cargo rustc --release --features="libc" --target=arm-linux-androideabi -- -C linker="/home/alesha/NDK/arm/bin/arm-linux-androideabi-clang" --crate-type="cdylib"
+//	cargo rustc --release --features="libc" --target=x86_64-linux-android  -- -C linker="/home/alesha/NDK/x86_64/bin/x86_64-linux-android-clang" --crate-type="cdylib"
+//	cargo rustc --release --features="libc" --target=aarch64-linux-android -- -C linker="/home/alesha/NDK/arm64/bin/aarch64-linux-android-clang" --crate-type="cdylib"
+
+
+
 #[cfg(target_os = "android")]extern crate libc;
 #[cfg(target_os = "android")]extern crate jni;
 #[macro_use]extern crate serde_derive;
@@ -36,6 +44,9 @@ pub const GAS:u8 = 255;
 pub const LIQ:u8 = 254;
 pub const SOL:u8 = 253;
 pub const AQU:u8 = 252;
+pub const HTML:u8 = 251;
+pub const SYMBOL:u8 = 250;
+
 
 #[derive(Debug)]
 pub struct Compound{
@@ -278,14 +289,14 @@ impl CompoundJson {
 
 //Function to generate question based on topic.
 //Attempt at a very generic fucntion indeed.
-pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->(String,String)>,lang:u8)->(String,String,String,String) {
+pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->(String,String)>,lang:u8,mode:u8)->(String,String,String,String) {
 	
 	let r_ind = rand::thread_rng().gen_range(0,questions.len());
-	let (q,a):(String,String) = questions[r_ind](lib).sscri(lang); 
+	let (q,a):(String,String) = if mode==SYMBOL {questions[r_ind](lib).sscri(lang)}else{questions[r_ind](lib).sscri_html(lang)};
 	
 	let (h,mh):(String,String) = match lang {
-		EN => enq::helper(&q,lib),
-		CZ => czq::helper(&q,lib),
+		EN => {if mode==SYMBOL {enq::helper(&q,lib)}else{enq::helper(&q,lib).sscri_html(lang)}},
+		CZ => {if mode==SYMBOL {czq::helper(&q,lib)}else{czq::helper(&q,lib).sscri_html(lang)}},
 		_  => (String::new(),String::new()),
 	};
 	
@@ -294,10 +305,10 @@ pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->
 
 //Function to generate question for equilibrium (REACTION).
 //Attempt at a very generic fucntion indeed.
-pub fn generate_r_questions(lib:&Vec<Reaction>,questions:Vec<&Fn(&Vec<Reaction>)->(String,String)>,lang:u8)->(String,String,String,String) {
+pub fn generate_r_questions(lib:&Vec<Reaction>,questions:Vec<&Fn(&Vec<Reaction>)->(String,String)>,lang:u8,mode:u8)->(String,String,String,String) {
 	
 	let r_ind = rand::thread_rng().gen_range(0,questions.len());
-	let (q,a):(String,String) = questions[r_ind](lib).sscri(lang); 
+	let (q,a):(String,String) = if mode==SYMBOL {questions[r_ind](lib).sscri(lang)}else{questions[r_ind](lib).sscri_html(lang)};
 	
 	let (h,mh):(String,String) = (String::new(),String::new());
 	
@@ -524,14 +535,22 @@ pub const AB_Z:f64=-273.15;
 //UTF8 APOCALYPSE STORAGE SPACE..now elsewhere.
 pub trait Sscri {
 	fn sscri(self,lang:u8)->(String,String);
+	fn sscri_html(self,lang:u8)->(String,String);
 }
 
 impl Sscri for (String,String) {	
+	//Scientific script from ordinary script using rare unicode glyphs.
 	fn sscri(self,lang:u8)->Self{		
 		(sscri_par(self.0,lang),sscri_par(self.1,lang))
 	}
+	
+	//Scientific script from ordinary script using html sub and superscript.
+	fn sscri_html(self,lang:u8)->Self {
+		(sscri_par_html(self.0,lang),sscri_par_html(self.1,lang))
+	}
 }
 
+//Inner function of sscri script.
 pub fn sscri_par(a: String,lang:u8)->String{
 	//create array of characters to upper. (nb, unicode is stored in unicode storage space)
 	let nums = numbers();
@@ -600,6 +619,130 @@ pub fn sscri_par(a: String,lang:u8)->String{
 	)
 }
 
+//Inner function of sscri html script.
+pub fn sscri_par_html(a: String,lang:u8)->String{
+	//create array of characters to upper. (nb, unicode is stored in unicode storage space)
+	let mut out = String::with_capacity(2000);
+	let mut out_a = String::with_capacity(2000);
+	//up->change to superscript immediately
+	//inb->superscripting value in brackets.
+	let mut up = false;
+	let mut down = false;
+	let mut inb = false;
+	
+	//go through string and do stuff to make a html out of it.
+	//mainly <sup></sup> and <sub></sub> brackets.
+	//first pass.
+	for x in a.chars(){
+		if x=='^' {
+			up=true;
+			out_a.push_str("<sup>");
+		}else if up & (x=='(') {
+			inb = true;
+		}else if up & inb & (x==')') {
+			inb = false;
+			out_a.push_str("</sup>");
+			up=false;
+		}else if up & is_supscriptable(x){
+			out_a.push(x);
+		}else if up {
+			up = false;	
+			out_a.push_str("</sup>");
+			out_a.push(x);
+		}else if !is_subscript(x) | (is_subscript(x) & up) {
+			if down {
+				down = false;
+				out_a.push_str("</sub>");
+			}
+			out_a.push(x);
+		}else if is_subscript(x) & !down {
+			down = true;
+			out_a.push_str("<sub>");
+			out_a.push(num_unsub(x));
+		}else if is_subscript(x) {
+			out_a.push(num_unsub(x));
+		}else{
+			out_a.push(x);
+		};
+	};
+	
+	//change (1-) and (1+) to (+) and (-)
+	out_a = discharge_ones(out_a);
+	out_a = form_root_unsup(out_a);
+	
+	//second pass for charges. This is probably faster than the other way.
+	//also some ridiculous preconditions.
+	println!("count of chars in out_a = {}",out_a.chars().count());
+	let mut supping = false;
+	for i in 0..out_a.chars().count() {
+		
+		
+		if //if space followed by (#+) skip this char 
+		(out_a.chars().nth(i)==Some(' '))
+		& (out_a.chars().nth(i+1)==Some('(')) //if start of block, place "<sup>" in place of "("
+		& (
+			(((out_a.chars().nth(i+2)==Some('+'))|(out_a.chars().nth(i+2)==Some('-')))
+				& (out_a.chars().nth(i+3)==Some(')'))
+			)
+			| (((out_a.chars().nth(i+3)==Some('+'))|(out_a.chars().nth(i+3)==Some('-')))
+				& (out_a.chars().nth(i+4)==Some(')'))
+			)
+		){
+		//literally skip
+		}else if  //if start of block, place "<sup>" in place of "("
+		(out_a.chars().nth(i)==Some('('))
+		& (
+			(((out_a.chars().nth(i+1)==Some('+'))|(out_a.chars().nth(i+1)==Some('-')))
+				& (out_a.chars().nth(i+2)==Some(')'))
+			)
+			| (((out_a.chars().nth(i+2)==Some('+'))|(out_a.chars().nth(i+2)==Some('-')))
+				& (out_a.chars().nth(i+3)==Some(')'))
+			)
+		) {
+			out.push_str("<sup>");
+			supping = true;
+		}else if //if end of block, place "</sup>" in place of ")"
+		(out_a.chars().nth(i)==Some(')')) 
+		& supping {
+			out.push_str("</sup>");
+			supping = false;
+		}else{
+			//Push everything else into the output. A little bit overdefensive.
+			match out_a.chars().nth(i) {
+				Some(ch) => {out.push(ch);},
+				_		 => {},
+			};
+		};
+		
+	};
+	
+	
+	//change dot to comma in numbers. for non english stuff.
+	if lang != EN {
+		let a = out;
+		out = String::with_capacity(2000);
+		for i in 0..a.len() {
+			if a.chars().nth(i-1).is_some()
+			& a.chars().nth(i).is_some()
+			& a.chars().nth(i+1).is_some() {
+				if a.chars().nth(i-1).unwrap().is_digit(10)
+				& (a.chars().nth(i).unwrap()=='.')
+				& a.chars().nth(i+1).unwrap().is_digit(10){
+					out.push(',');
+				}else{
+					out.push(a.chars().nth(i).unwrap());
+				};
+			}else if a.chars().nth(i).is_some() {
+				out.push(a.chars().nth(i).unwrap());
+			};	
+		};
+	}; 
+	
+	
+	//NB, no need to replace superscript silliness here, as it is all tagged.
+	a_to_an(lang,futile_ones(out))
+}
+
 //superscripts characters.
 pub fn upchar(a:char)->(char,bool){
 	let liba = numbers();
@@ -617,6 +760,73 @@ pub fn is_up(a:char)->bool{
 		if a==libb[i] {return true;};
 	};
 	false
+}
+
+//change (1-) and (1+) to (+) and (-)
+fn discharge_ones(inp:String)->String {
+	let mut out = String::with_capacity(inp.len());
+	
+	let mut detected = true;
+	for i in 0..inp.chars().count() {
+		
+		if (inp.chars().nth(i)==Some('('))
+		& (inp.chars().nth(i+1)==Some('1'))
+		& ((inp.chars().nth(i+2)==Some('+'))|(inp.chars().nth(i+2)==Some('-')))
+		& (inp.chars().nth(i+3)==Some(')')) {
+			detected = true;
+			match inp.chars().nth(i) {
+				Some(ch) => {out.push(ch);},
+				_		 => {},
+			};
+		}else if detected & (inp.chars().nth(i)==Some('1')) {
+			detected = false;
+		}else{
+			match inp.chars().nth(i) {
+				Some(ch) => {out.push(ch);},
+				_		 => {},
+			};
+		};
+
+	};
+	out
+}
+
+//if up to 99th√, put 99th in <sup> instead of superscript.
+//NB must be in superscript to start ff with.
+fn form_root_unsup(inp:String)->String {
+	
+	let mut output = String::with_capacity(inp.len());
+	
+	let mut in_superscript = false;
+	for i in 0..inp.chars().count() {
+		if !in_superscript
+		& (
+			((inp.chars().nth(i+1)==Some('√'))
+				& is_sup(inp.chars().nth(i).unwrap_or('!'))
+			)|((inp.chars().nth(i+2)==Some('√'))
+				& is_sup(inp.chars().nth(i+1).unwrap_or('!'))
+				& is_sup(inp.chars().nth(i).unwrap_or('!'))
+			)
+		){
+			in_superscript = true;
+			output.push_str("<sup>"); 
+			output.push(num_unsup(inp.chars().nth(i).unwrap()));
+		}else if in_superscript & is_sup(inp.chars().nth(i).unwrap_or('!')) {
+			output.push(num_unsup(inp.chars().nth(i).unwrap()));
+		}else if in_superscript & (inp.chars().nth(i)==Some('√')) {
+			output.push_str("</sup>"); 
+			output.push(inp.chars().nth(i).unwrap());
+			in_superscript = false;
+		}else{
+			match inp.chars().nth(i) {
+				Some(ch) => {output.push(ch);},
+				_		 => {},
+			};
+		};
+		
+	};
+	
+	output
 }
 
 //removes superscript ones which are on their own.
@@ -765,18 +975,91 @@ pub fn numbers_sup()->Vec<char>{
 	     '\u{1D42}','\u{20DF}','\u{02E0}','Z']
 }
 
+
+
+
 //Generates a structure for making subscripts.
 pub fn num_subs(inp:char)->char {
-	let subbers = [('0','\u{2080}'),('1','\u{2081}'),('2','\u{2082}'),
-				   ('3','\u{2083}'),('4','\u{2084}'),('5','\u{2085}'),
-				   ('6','\u{2086}'),('7','\u{2087}'),('8','\u{2088}'),
-				   ('9','\u{2089}')];
-	for x in subbers.iter(){
-		if inp==x.0 {return x.1};
+	match inp {
+		'0'=>'\u{2080}',
+		'1'=>'\u{2081}',
+		'2'=>'\u{2082}',
+		'3'=>'\u{2083}',
+		'4'=>'\u{2084}',
+		'5'=>'\u{2085}',
+		'6'=>'\u{2086}',
+		'7'=>'\u{2087}',
+		'8'=>'\u{2088}',
+		'9'=>'\u{2089}',
+		_  => inp,
 	}
-	inp
 }
 
+//Generates a structure for making subscripts.
+pub fn num_unsup(inp:char)->char {
+	match inp {
+		'\u{2070}'=>'0',
+		'\u{00B9}'=>'1',
+		'\u{00B2}'=>'2',
+		'\u{00B3}'=>'3',
+		'\u{2074}'=>'4',
+		'\u{2075}'=>'5',
+		'\u{2076}'=>'6',
+		'\u{2077}'=>'7',
+		'\u{2078}'=>'8',
+		'\u{2079}'=>'9',
+		_  => inp,
+	}
+}
+
+//Generates a structure for making subscripts.
+pub fn num_unsub(inp:char)->char {
+	match inp {
+		'\u{2080}'=>'0',
+		'\u{2081}'=>'1',
+		'\u{2082}'=>'2',
+		'\u{2083}'=>'3',
+		'\u{2084}'=>'4',
+		'\u{2085}'=>'5',
+		'\u{2086}'=>'6',
+		'\u{2087}'=>'7',
+		'\u{2088}'=>'8',
+		'\u{2089}'=>'9',
+		_  => inp,
+	}
+}
+
+//is number a superscript..
+pub fn is_sup(inp:char)->bool {
+	match inp {
+		'\u{2070}'=>true,
+		'\u{00B9}'=>true,
+		'\u{00B2}'=>true,
+		'\u{00B3}'=>true,
+		'\u{2074}'...'\u{2079}'=>true,
+		_  => false,
+	}
+}
+
+
+//find if number is a subscript.
+pub fn is_subscript(inp:char)->bool {
+	match inp {
+		'\u{2080}'...'\u{2089}' => true,
+		_					   => false,
+	}
+}
+
+//find if number is a subscript.
+pub fn is_supscriptable(inp:char)->bool {
+	match inp {
+		'0'...'9' => true,
+		'a'...'z'				=> true,
+		'A'...'Z'				=> true,
+		'-'|'+'|'/'|'*'			=> true,
+		_						=> false,
+	}
+}
 
 //When Json is parsed, change '&x' to x-subscript.
 fn subscriptise(formula:&String)->String {
@@ -801,7 +1084,7 @@ pub fn up_charge(b:String)->String {
 	let mut a = b;
 	a = a.replace("(+)","\u{207A}");
 	a = a.replace("(-)","\u{207B}");
-	for i in 0..4{
+	for i in 1..5{
 		let old_mr = format!("({}-)",i);
 		let old_pr = format!("({}+)",i);
 		a = a.replace(&old_pr,"\u{207A}");
@@ -811,7 +1094,7 @@ pub fn up_charge(b:String)->String {
 	a = a.replace("-)","\u{207B})");
 	a = a.replace("+]","\u{207A}]");
 	a = a.replace("-]","\u{207B}]");
-	for i in 0..4{
+	for i in 1..5{
 		let old_mr = format!("{}-)",i);
 		let old_pr = format!("{}+)",i);
 		let old_ms = format!("{}-]",i);
