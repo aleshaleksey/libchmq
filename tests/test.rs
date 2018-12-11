@@ -1,5 +1,23 @@
 extern crate libchmq;
-use libchmq::{enq,czq};
+use libchmq::{enq,czq,Sscri,EN,CZ};
+	
+	//test the bracketing of <sup></sup> in html version.
+	#[test]
+	pub fn html_test_1() {
+		let mut ccompounds = czq::create_compound_lib(Vec::new());
+		let mut ecompounds = enq::create_compound_lib(Vec::new());
+		
+		for x in ccompounds.iter() {
+			let (a,b) = (czq::form_chem(x),czq::form_chem(x)).sscri_html(CZ);
+			println!("\n{}\n",a);
+		}
+		
+		for x in ecompounds.iter() {
+			let (c,d) = (enq::form_chem(x),enq::form_chem(x)).sscri_html(EN);
+			println!("\n{}\n",c);
+		}
+		assert!(true,true);
+	}
 	
 	//Test of drawing reactions.
 	#[test]
@@ -93,16 +111,16 @@ use libchmq::{enq,czq};
 		for x in reactions.into_iter() {
 			let reactions = vec![x];
 			
-			let (q,a) = enq::q_5_0_pressure(&reactions);
+			let (q,a) = enq::q_5_0_pressure(&reactions).sscri_html(EN);
 			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
 			
-			let (q,a) = enq::q_5_0_enthalpy(&reactions);
+			let (q,a) = enq::q_5_0_enthalpy(&reactions).sscri_html(EN);
 			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
 			
-			let (q,a) = enq::q_5_1(&reactions);
+			let (q,a) = enq::q_5_1(&reactions).sscri_html(EN);
 			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
 			
-			let (q,a) = enq::q_5_2(&reactions);
+			let (q,a) = enq::q_5_2(&reactions).sscri_html(EN);
 			println!("\nQuestion:\n{}\n\nAnswer:\n{}\n",q,a);
 		};
 		
