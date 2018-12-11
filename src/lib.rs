@@ -295,8 +295,8 @@ pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->
 	let (q,a):(String,String) = if mode==SYMBOL {questions[r_ind](lib).sscri(lang)}else{questions[r_ind](lib).sscri_html(lang)};
 	
 	let (h,mh):(String,String) = match lang {
-		EN => enq::helper(&q,lib),
-		CZ => czq::helper(&q,lib),
+		EN => {if mode==SYMBOL {enq::helper(&q,lib)}else{enq::helper(&q,lib).sscri_html(lang)}},
+		CZ => {if mode==SYMBOL {czq::helper(&q,lib)}else{czq::helper(&q,lib).sscri_html(lang)}},
 		_  => (String::new(),String::new()),
 	};
 	
@@ -622,8 +622,8 @@ pub fn sscri_par(a: String,lang:u8)->String{
 //Inner function of sscri html script.
 pub fn sscri_par_html(a: String,lang:u8)->String{
 	//create array of characters to upper. (nb, unicode is stored in unicode storage space)
-	let nums = numbers();
-	let mut out = String::with_capacity(1000);
+	let mut out = String::with_capacity(2000);
+	let mut out_a = String::with_capacity(2000);
 	//up->change to superscript immediately
 	//inb->superscripting value in brackets.
 	let mut up = false;
@@ -631,41 +631,75 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 	let mut inb = false;
 	
 	//go through string and do stuff to make a html out of it.
+	//mainly <sup></sup> and <sub></sub> brackets.
+	//first pass.
 	for x in a.chars(){
 		if x=='^' {
 			up=true;
-			out.push_str("<sup>");
+			out_a.push_str("<sup>");
 		}else if up & (x=='(') {
 			inb = true;
 		}else if up & inb & (x==')') {
 			inb = false;
-			out.push_str("</sup>");
+			out_a.push_str("</sup>");
 			up=false;
 		}else if up & is_supscriptable(x){
-			out.push(x);
+			out_a.push(x);
 		}else if up {
 			up = false;	
-			out.push_str("</sup>");
-			out.push(x);
-		}else if !is_subscript(x) | (is_subscript(x) & up) { //make this function.
+			out_a.push_str("</sup>");
+			out_a.push(x);
+		}else if !is_subscript(x) | (is_subscript(x) & up) {
 			if down {
 				down = false;
-				out.push_str("</sub>");
+				out_a.push_str("</sub>");
 			}
-			out.push(x);
-		}else if is_subscript(x) & !down { //if it is a subscript character.
+			out_a.push(x);
+		}else if is_subscript(x) & !down {
 			down = true;
-			out.push_str("<sub>");
-			out.push(num_unsub(x));
+			out_a.push_str("<sub>");
+			out_a.push(num_unsub(x));
+		}else if is_subscript(x) {
+			out_a.push(num_unsub(x));
 		}else{
-			out.push(x);
+			out_a.push(x);
 		};
 	};
 	
-	//change dot to comma. for non english stuff.
+	//second pass for charges. This is probably faster than the other way.
+	println!("count of chars in out_a = {}",out_a.chars().count());
+	let mut supping = false;
+	for i in 0..out_a.chars().count() {
+		if (out_a.chars().nth(i)==Some('(')) //if start of block, place "<sup>" in place of "("
+		& (
+			(((out_a.chars().nth(i+1)==Some('+'))|(out_a.chars().nth(i+1)==Some('-')))
+				& (out_a.chars().nth(i+2)==Some(')'))
+			)
+			| (((out_a.chars().nth(i+2)==Some('+'))|(out_a.chars().nth(i+2)==Some('-')))
+				& (out_a.chars().nth(i+3)==Some(')'))
+			)
+		) {
+			out.push_str("<sup>");
+			supping = true;
+		}else if (out_a.chars().nth(i)==Some(')')) //if end of block, place "</sup>" in place of ")"
+		& supping {
+			out.push_str("</sup>");
+			supping = false;
+		}else{
+			//Push everything else into the output. A little bit overdefensive.
+			match out_a.chars().nth(i) {
+				Some(ch) => {out.push(ch);},
+				_		 => {},
+			};
+		};
+		
+	};
+	
+	
+	//change dot to comma in numbers. for non english stuff.
 	if lang != EN {
 		let a = out;
-		out = String::with_capacity(1000);
+		out = String::with_capacity(2000);
 		for i in 0..a.len() {
 			if a.chars().nth(i-1).is_some()
 			& a.chars().nth(i).is_some()
@@ -684,11 +718,8 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 	}; 
 	
 	
-	a_to_an(lang,
-		futile_ones(
-			rem_upsilly(rem_upone(out))
-		)	
-	)
+	//NB, no need to replace superscript silliness here, as it is all tagged.
+	a_to_an(lang,futile_ones(out))
 }
 
 //superscripts characters.
