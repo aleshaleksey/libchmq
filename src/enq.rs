@@ -4065,34 +4065,9 @@ pub fn q_7_3b(compounds:&Vec<Compound>)->(String,String){
 //Will it go left or right.
 pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 	let (mut question,mut answer) = (String::with_capacity(500),String::with_capacity(500));
-	let enthalpic_error = ("Nothing to see here.".to_owned(),"Proceed to next question".to_owned());
-	
-	let mut pressure_reactions = Vec::with_capacity(reaction_lib.len());
-	
-	//Get reactions where enthalpy is used.
-	'analyse_rection_states: for reaction in reaction_lib.iter() {
-		for reagent in reaction.reagents.iter() {
-			if reagent.2==GAS {
-				pressure_reactions.push(reaction);
-				continue 'analyse_rection_states;
-			};
-		};
-		for product in reaction.products.iter() {
-			if product.2==GAS {
-				pressure_reactions.push(reaction);
-				continue 'analyse_rection_states;
-			};
-		};		
-	};
-	
-	//Exit if library has no enthalpy based questions.
-	if pressure_reactions.len()==0 {
-		return enthalpic_error
-	};
-	
 	
 	//Pick 
-	let reaction = &pressure_reactions[rand::thread_rng().gen_range(0,pressure_reactions.len())];
+	let reaction = &reaction_lib[rand::thread_rng().gen_range(0,reaction_lib.len())];
 	
 	//Write question.
 	let increase = if rand::thread_rng().gen_range(0,200)>99 {true}else{false};
