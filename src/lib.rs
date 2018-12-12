@@ -289,6 +289,7 @@ impl CompoundJson {
 
 //Function to generate question based on topic.
 //Attempt at a very generic fucntion indeed.
+#[cfg(not(target_os = "android"))]
 pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->(String,String)>,lang:u8,mode:u8)->(String,String,String,String) {
 	
 	let r_ind = rand::thread_rng().gen_range(0,questions.len());
@@ -305,6 +306,7 @@ pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->
 
 //Function to generate question for equilibrium (REACTION).
 //Attempt at a very generic fucntion indeed.
+#[cfg(not(target_os = "android"))]
 pub fn generate_r_questions(lib:&Vec<Reaction>,questions:Vec<&Fn(&Vec<Reaction>)->(String,String)>,lang:u8,mode:u8)->(String,String,String,String) {
 	
 	let r_ind = rand::thread_rng().gen_range(0,questions.len());

@@ -49,8 +49,8 @@ pub extern fn Java_chmq_example_owl_chmq_molesQEn_molesQuestionsEn<'a> (env: JNI
 		7=>enq::q_1_4d(&compounds),
 		_=>enq::q_1_4b(&compounds),
 	};
-	q_a_text = q_a_text.sscri(EN);
-	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds);
+	q_a_text = q_a_text.sscri_html(EN);
+	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds).sscri_html(EN);
 	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
 	
 	
@@ -78,8 +78,8 @@ pub extern fn Java_chmq_example_owl_chmq_osmoticQEn_osmoticQuestionsEn (env: JNI
 		4=>enq::q_2_4(&compounds),
 		_=>enq::q_2_4s(&compounds),
 	};
-	q_a_text = q_a_text.sscri(EN);
-	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds);
+	q_a_text = q_a_text.sscri_html(EN);
+	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds).sscri_html(EN);
 	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
@@ -105,8 +105,8 @@ pub extern fn Java_chmq_example_owl_chmq_ionicQEn_ionicQuestionsEn (env: JNIEnv,
 		3=>enq::q_3_2c(&compounds),
 		_=>enq::q_3_1(&compounds),
 	};
-	q_a_text = q_a_text.sscri(EN);
-	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds);
+	q_a_text = q_a_text.sscri_html(EN);
+	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds).sscri_html(EN);
 	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
@@ -131,8 +131,8 @@ pub extern fn Java_chmq_example_owl_chmq_kspQEn_kspQuestionsEn (env: JNIEnv, cla
 		3=>enq::q_4_0(&compounds),
 		_=>enq::q_4_1b(&compounds),
 	};
-	q_a_text = q_a_text.sscri(EN);
-	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds);
+	q_a_text = q_a_text.sscri_html(EN);
+	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds).sscri_html(EN);
 	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
@@ -159,8 +159,8 @@ pub extern fn Java_chmq_example_owl_chmq_phQEn_pHQuestionsEn (env: JNIEnv, class
 		5=>enq::q_6_3(&compounds),
 		_=>enq::q_6_3b(&compounds),
 	};
-	q_a_text = q_a_text.sscri(EN);
-	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds);
+	q_a_text = q_a_text.sscri_html(EN);
+	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds).sscri_html(EN);
 	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
@@ -191,8 +191,8 @@ pub extern fn Java_chmq_example_owl_chmq_bufferQEn_bufferQuestionsEn (env: JNIEn
 		8=>enq::q_7_3(&compounds),
 		_=>enq::q_7_3b(&compounds),
 	};
-	q_a_text = q_a_text.sscri(EN);
-	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds);
+	q_a_text = q_a_text.sscri_html(EN);
+	let (help,minihelp)=enq::helper(&q_a_text.0,&compounds).sscri_html(EN);
 	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
