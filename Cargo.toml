@@ -18,19 +18,19 @@ libc = {version="=0.2.34", optional = true}
 jni = {path="jni-rs"}
 
 [profile.release]
-opt-level =3
+opt-level = 3
 debug = false
 rpath = false
-lto = true
+lto = "fat"
 debug-assertions = false
 codegen-units = 1
 panic = 'unwind'
 
 [profile.dev]
-opt-level =2
+opt-level = "s"
 debug = false
 rpath = false
-lto = true
+lto = false
 debug-assertions = false
 codegen-units =1
 panic = 'unwind'
