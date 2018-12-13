@@ -555,7 +555,12 @@ impl Sscri for (String,String) {
 	//Scientific script from ordinary script using html sub and superscript.
 	//Android version which uses <sup><small></small></sup>
 	fn sscri_android(self,lang:u8)->Self {
-		(sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true))
+		let (a,b) = (sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true));
+		
+		(
+			a.lines().map(|x| format!("<p>{}</p>",x)).collect::<String>(),
+			b.lines().map(|x| format!("<p>{}</p>",x)).collect::<String>()
+		)
 	}
 }
 

@@ -4432,8 +4432,8 @@ pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
 		x = if !products { keq_root*conc_init }
 				else	 { conc_init/keq_root };
 				
-		for i in 0..init_side.len() {init_concs.push(conc_init);};
-		for i in 0..zero_side.len() {zero_concs.push(x);};		
+		for _ in 0..init_side.len() {init_concs.push(conc_init);};
+		for _ in 0..zero_side.len() {zero_concs.push(x);};		
 		
 	//case of squared or less.
 	}else if (r_num<3) & (p_num<3) {
@@ -4466,13 +4466,13 @@ pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
 		x = zero_side_product.powf(1.0/zero_num as f64);
 		
 		//get final concentrations.
-		for cmp in zero_side.iter() {zero_concs.push(x);};
+		for _ in zero_side.iter() {zero_concs.push(x);};
 	}else{
 		return enthalpic_error;
 	};
 	
 	//correct initial concentrations to true initial concentrations.
-	for (i,conc) in init_concs.iter().enumerate() {in_init_concs.push(*conc+x);};	
+	for conc in init_concs.iter() {in_init_concs.push(*conc+x);};	
 	
 	//Initial concs are all exact. Thus only final concs need reworked.
 	for x in zero_concs.iter_mut() {*x = ff(4,*x).parse().unwrap_or(*x);};
