@@ -289,6 +289,7 @@ impl CompoundJson {
 
 //Function to generate question based on topic.
 //Attempt at a very generic fucntion indeed.
+#[cfg(not(target_os = "android"))]
 pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->(String,String)>,lang:u8,mode:u8)->(String,String,String,String) {
 	
 	let r_ind = rand::thread_rng().gen_range(0,questions.len());
@@ -305,6 +306,7 @@ pub fn generate_questions(lib:&Vec<Compound>,questions:Vec<&Fn(&Vec<Compound>)->
 
 //Function to generate question for equilibrium (REACTION).
 //Attempt at a very generic fucntion indeed.
+#[cfg(not(target_os = "android"))]
 pub fn generate_r_questions(lib:&Vec<Reaction>,questions:Vec<&Fn(&Vec<Reaction>)->(String,String)>,lang:u8,mode:u8)->(String,String,String,String) {
 	
 	let r_ind = rand::thread_rng().gen_range(0,questions.len());
@@ -536,6 +538,7 @@ pub const AB_Z:f64=-273.15;
 pub trait Sscri {
 	fn sscri(self,lang:u8)->(String,String);
 	fn sscri_html(self,lang:u8)->(String,String);
+	fn sscri_android(self,lang:u8)->(String,String);
 }
 
 impl Sscri for (String,String) {	
@@ -546,7 +549,13 @@ impl Sscri for (String,String) {
 	
 	//Scientific script from ordinary script using html sub and superscript.
 	fn sscri_html(self,lang:u8)->Self {
-		(sscri_par_html(self.0,lang),sscri_par_html(self.1,lang))
+		(sscri_par_html(self.0,lang,false),sscri_par_html(self.1,lang,false))
+	}
+	
+	//Scientific script from ordinary script using html sub and superscript.
+	//Android version which uses <sup><small></small></sup>
+	fn sscri_android(self,lang:u8)->Self {
+		(sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true))
 	}
 }
 
@@ -620,7 +629,7 @@ pub fn sscri_par(a: String,lang:u8)->String{
 }
 
 //Inner function of sscri html script.
-pub fn sscri_par_html(a: String,lang:u8)->String{
+pub fn sscri_par_html(a: String,lang:u8,android:bool)->String{
 	//create array of characters to upper. (nb, unicode is stored in unicode storage space)
 	let mut out = String::with_capacity(2000);
 	let mut out_a = String::with_capacity(2000);
@@ -629,6 +638,10 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 	let mut up = false;
 	let mut down = false;
 	let mut inb = false;
+	let enter_sup = if android {"<sup><small>"}else{"<sup>"};
+	let enter_sub = if android {"<sub><small>"}else{"<sub>"};
+	let exit_sup = if android {"</sup></small>"}else{"</sup>"};
+	let exit_sub = if android {"</sub></small>"}else{"</sub>"};
 	
 	//go through string and do stuff to make a html out of it.
 	//mainly <sup></sup> and <sub></sub> brackets.
@@ -636,28 +649,28 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 	for x in a.chars(){
 		if x=='^' {
 			up=true;
-			out_a.push_str("<sup>");
+			out_a.push_str(enter_sup);
 		}else if up & (x=='(') {
 			inb = true;
 		}else if up & inb & (x==')') {
 			inb = false;
-			out_a.push_str("</sup>");
+			out_a.push_str(exit_sup);
 			up=false;
 		}else if up & is_supscriptable(x){
 			out_a.push(x);
 		}else if up {
 			up = false;	
-			out_a.push_str("</sup>");
+			out_a.push_str(exit_sup);
 			out_a.push(x);
 		}else if !is_subscript(x) | (is_subscript(x) & up) {
 			if down {
 				down = false;
-				out_a.push_str("</sub>");
+				out_a.push_str(exit_sub);
 			}
 			out_a.push(x);
 		}else if is_subscript(x) & !down {
 			down = true;
-			out_a.push_str("<sub>");
+			out_a.push_str(enter_sub);
 			out_a.push(num_unsub(x));
 		}else if is_subscript(x) {
 			out_a.push(num_unsub(x));
@@ -668,11 +681,11 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 	
 	//change (1-) and (1+) to (+) and (-)
 	out_a = discharge_ones(out_a);
-	out_a = form_root_unsup(out_a);
+	out_a = form_root_unsup(out_a,android);
 	
 	//second pass for charges. This is probably faster than the other way.
 	//also some ridiculous preconditions.
-	println!("count of chars in out_a = {}",out_a.chars().count());
+	//println!("count of chars in out_a = {}",out_a.chars().count());
 	let mut supping = false;
 	for i in 0..out_a.chars().count() {
 		
@@ -699,12 +712,12 @@ pub fn sscri_par_html(a: String,lang:u8)->String{
 				& (out_a.chars().nth(i+3)==Some(')'))
 			)
 		) {
-			out.push_str("<sup>");
+			out.push_str(enter_sup);
 			supping = true;
 		}else if //if end of block, place "</sup>" in place of ")"
 		(out_a.chars().nth(i)==Some(')')) 
 		& supping {
-			out.push_str("</sup>");
+			out.push_str(exit_sup);
 			supping = false;
 		}else{
 			//Push everything else into the output. A little bit overdefensive.
@@ -795,9 +808,12 @@ fn discharge_ones(inp:String)->String {
 
 //if up to 99th√, put 99th in <sup> instead of superscript.
 //NB must be in superscript to start ff with.
-fn form_root_unsup(inp:String)->String {
+fn form_root_unsup(inp:String,android:bool)->String {
 	
 	let mut output = String::with_capacity(inp.len());
+	
+	let enter_sup = if android {"<sup><small>"}else{"<sup>"};
+	let exit_sup = if android {"</sup></small>"}else{"</sup>"};
 	
 	let mut in_superscript = false;
 	for i in 0..inp.chars().count() {
@@ -811,12 +827,12 @@ fn form_root_unsup(inp:String)->String {
 			)
 		){
 			in_superscript = true;
-			output.push_str("<sup>"); 
+			output.push_str(enter_sup); 
 			output.push(num_unsup(inp.chars().nth(i).unwrap()));
 		}else if in_superscript & is_sup(inp.chars().nth(i).unwrap_or('!')) {
 			output.push(num_unsup(inp.chars().nth(i).unwrap()));
 		}else if in_superscript & (inp.chars().nth(i)==Some('√')) {
-			output.push_str("</sup>"); 
+			output.push_str(exit_sup); 
 			output.push(inp.chars().nth(i).unwrap());
 			in_superscript = false;
 		}else{
