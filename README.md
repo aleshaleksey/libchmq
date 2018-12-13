@@ -61,8 +61,13 @@ let (q,a) = libchmq::enq::q_1_0(&compounds).sscri(libchmq::EN);
 //Generate text for a question using html compatible subscript/superscript tags.
 let (q_html,a_html) = libchmq::enq::q_1_0(&compounds).sscri_html(libchmq::EN);
 
+//Generate text for a question using android textView compatible format.
+//NB Html.fromHtml() needs to be used.
+let (q_and,a_and) = libchmq::enq::q_1_0(&compounds).sscri_and(libchmq::EN);
+
 println!("Question:\n{}\n\nAnswer:\n{}",q,a);
 println!("Now for html compatible subscripts/superscripts.\nQuestion:\n{}\n\nAnswer:\n{}",q_html,a_html);
+println!("Now for android textView compatible format.\nQuestion:\n{}\n\nAnswer:\n{}",q_and,a_and);
 ```
 
 The text of a question can then be scanned with the "helper" function,
