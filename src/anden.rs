@@ -1,14 +1,14 @@
-//use Compound;
-//use Sscri;
-//use enq;
+use Compound;
+use Sscri;
+use enq;
 
-//use rand;
-//use rand::Rng;
-//use EN;
+use rand;
+use rand::Rng;
+use EN;
 
-//use enq::WARNING;
-//use enq::TITLE;
-//use enq::ABOUT;
+use enq::WARNING;
+use enq::TITLE;
+use enq::ABOUT;
 
 #[cfg(target_os = "android")]use jni::JNIEnv;
 #[cfg(target_os = "android")]use jni::objects::{JClass};

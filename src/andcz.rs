@@ -1,14 +1,14 @@
-//use Compound;
-//use Sscri;
-//use czq;
+use Compound;
+use Sscri;
+use czq;
 
-//use rand;
-//use rand::Rng;
+use rand;
+use rand::Rng;
 
-//use czq::WARNING;
-//use czq::TITLE;
-//use czq::ABOUT;
-//use CZ;
+use czq::WARNING;
+use czq::TITLE;
+use czq::ABOUT;
+use CZ;
 
 #[cfg(target_os = "android")]use jni::JNIEnv;
 #[cfg(target_os = "android")]use jni::objects::{JClass};
