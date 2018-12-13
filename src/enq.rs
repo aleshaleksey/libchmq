@@ -195,7 +195,6 @@ pub fn mini_form_chem(q:&Compound)->String{
 //MOLES QUESTIONS
 //MOLES QUESTIONS
 //MOLES QUESTIONS
-#[cfg(not(target_os = "android"))]
 pub fn q_1_0(compounds:&Vec<Compound>)->(String,String) {
 //Question of type n=m/Mr.
 	//generate compound
@@ -224,7 +223,6 @@ pub fn q_1_0(compounds:&Vec<Compound>)->(String,String) {
 	(question,answer)	
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_1(compounds:&Vec<Compound>)->(String,String){
 //Question of type m=n*Mr.
 	//generate compound
@@ -254,7 +252,6 @@ pub fn q_1_1(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_2(compounds:&Vec<Compound>)->(String,String){
 //Question of type Molarity=n/Vol.
 	//remove medically related compounds
@@ -302,7 +299,6 @@ pub fn q_1_2(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_2c(compounds:&Vec<Compound>)->(String,String){
 //Question of type Molarity=n/Vol.
 	//remove medically related compounds
@@ -350,7 +346,6 @@ pub fn q_1_2c(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_2b(compounds:&Vec<Compound>)->(String,String){ //INCOMPLETE
 //Question of type n=Molarity*Vol.
 	//remove medically related compounds
@@ -396,7 +391,6 @@ pub fn q_1_2b(compounds:&Vec<Compound>)->(String,String){ //INCOMPLETE
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_3(compounds:&Vec<Compound>)->(String,String){
 //Question of type m=V*C*Mr
 	//remove medically related compounds
@@ -441,7 +435,6 @@ pub fn q_1_3(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)	
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_4(compounds:&Vec<Compound>)->(String,String){
 //C1V1=C2V2 type 1 (C1V1=C2V2 questions)
 
@@ -509,7 +502,6 @@ pub fn q_1_4(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_4b(compounds:&Vec<Compound>)->(String,String){
 //Dilution factor type based on C1V1=C2V2.
 
@@ -589,7 +581,6 @@ pub fn q_1_4b(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_4c(compounds:&Vec<Compound>)->(String,String){
 //C1V1=C2V2 type 1 (C1V1=C2V2 questions) with mass
 
@@ -657,7 +648,6 @@ pub fn q_1_4c(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_1_4d(compounds:&Vec<Compound>)->(String,String){
 //Dilution factor type based on C1V1=C2V2. (mass type)
 
@@ -745,7 +735,6 @@ pub fn q_1_4d(compounds:&Vec<Compound>)->(String,String){
 //OSMOLARITY QUESTION TYPES.
 //OSMOLARITY QUESTION TYPES.
 
-#[cfg(not(target_os = "android"))]
 pub fn q_2_0(compounds:&Vec<Compound>)->(String,String){
 //Question of type Osmoles=sum(Cs).
 	//remove medically related compounds
@@ -786,7 +775,6 @@ pub fn q_2_0(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_2_1(compounds:&Vec<Compound>)->(String,String){
 //Question of type m=osmoles*Mr.
 	//remove medically related compounds
@@ -828,7 +816,6 @@ pub fn q_2_1(compounds:&Vec<Compound>)->(String,String){
 
 
 
-#[cfg(not(target_os = "android"))]
 pub fn q_2_2(compounds:&Vec<Compound>)->(String,String){
 //Question of type Osmolarity=sum(Cs)/Vol.
 	//remove medically related compounds
@@ -885,7 +872,6 @@ pub fn q_2_2(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_2_3(compounds:&Vec<Compound>)->(String,String){
 //Question of type mass=Osmolarity/(n_solutes)*Volume*Mr.
 	//remove medically related compounds
@@ -941,7 +927,6 @@ pub fn q_2_3(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)	
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_2_4(compounds:&Vec<Compound>)->(String,String){
 	//Question of type Osmotic Pressure=1000*R*T*sum(Cs).
 	//remove medically related compounds
@@ -1024,7 +1009,6 @@ pub fn q_2_4(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_2_4s(compounds:&Vec<Compound>)->(String,String){
 	//Question of INVERSE type Osmotic Pressure=1000*R*T*sum(Cs).
 	//remove medically related compounds
@@ -1136,7 +1120,6 @@ pub fn q_2_4s(compounds:&Vec<Compound>)->(String,String){
 //IONIC SRENGTH QUESTION TYPES.
 
 
-#[cfg(not(target_os = "android"))]
 pub fn q_3_0(compounds:&Vec<Compound>)->(String,String){
 //Question of type I=1/2*sum(cq^2).
 //println!("q_3_0");
@@ -1194,7 +1177,6 @@ pub fn q_3_0(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_3_1(compounds:&Vec<Compound>)->(String,String){
 //Question of type c=2*I/(sum(soln*q^2)).
 //Aka reverse ionic strength question.
@@ -1253,7 +1235,6 @@ pub fn q_3_1(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_3_2(compounds:&Vec<Compound>)->(String,String){
 //Question of type I=Σ(m*Mr/V*q^2).
 //println!("q_3_2");
@@ -1316,7 +1297,6 @@ pub fn q_3_2(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_3_2b(compounds:&Vec<Compound>)->(String,String){
 //Question of type I=Σ(m*Mr/V*q^2). Variant
 //FIND V!
@@ -1402,7 +1382,6 @@ pub fn q_3_2b(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_3_2c(compounds:&Vec<Compound>)->(String,String){
 //Question of type I=Σ(m*Mr/V*q^2). Variant
 //FIND m!
@@ -1492,7 +1471,6 @@ pub fn q_3_2c(compounds:&Vec<Compound>)->(String,String){
 }
 
 
-#[cfg(not(target_os = "android"))]
 pub fn q_4_0(compounds:&Vec<Compound>)->(String,String){
 //Calculate Ksp from solubility
 	//remove medically related compounds
@@ -1579,7 +1557,6 @@ pub fn q_4_0(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)	
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_4_0a(compounds:&Vec<Compound>)->(String,String){
 //Calculate solubility from Ksp.
 	//remove medically related compounds
@@ -1672,7 +1649,6 @@ pub fn q_4_0a(compounds:&Vec<Compound>)->(String,String){
 }
 
 //NB This question is not in the general form. only works for binary ions.
-#[cfg(not(target_os = "android"))]
 pub fn q_4_1(compounds:&Vec<Compound>)->(String,String){
 //Calculate concentration of one ion from Ksp and concentration of the other.
 	//remove medically related compounds
@@ -1778,7 +1754,6 @@ pub fn q_4_1(compounds:&Vec<Compound>)->(String,String){
 }
 
 //NB This question is not in the general form. only works for binary ions.
-#[cfg(not(target_os = "android"))]
 pub fn q_4_1b(compounds:&Vec<Compound>)->(String,String){
 //Calculate concentration of one ion from solubility and concentration of the other.
 	//remove medically related compounds
@@ -1884,7 +1859,6 @@ pub fn q_4_1b(compounds:&Vec<Compound>)->(String,String){
 
 //pH strong
 //pH strong (THIS FUNCTION IS OK)
-#[cfg(not(target_os = "android"))]
 pub fn q_6_0(compounds:&Vec<Compound>)->(String,String){
 //Find pH from concentration.
 	//remove medically related compounds
@@ -1977,7 +1951,6 @@ pub fn q_6_0(compounds:&Vec<Compound>)->(String,String){
 }
 
 //THIS FUNCTION IS NOW FINE (But can give above limit concentrations)
-#[cfg(not(target_os = "android"))]
 pub fn q_6_0b(compounds:&Vec<Compound>)->(String,String){
 //Find concentration. from pH
 	//remove medically related compounds
@@ -2079,7 +2052,6 @@ pub fn q_6_0b(compounds:&Vec<Compound>)->(String,String){
 }
 
 //pH strong (THIS FUNCTION IS OK)
-#[cfg(not(target_os = "android"))]
 pub fn q_6_1(compounds:&Vec<Compound>)->(String,String){
 //Find pH from mass.
 	//remove medically related compounds
@@ -2179,7 +2151,6 @@ pub fn q_6_1(compounds:&Vec<Compound>)->(String,String){
 }
 
 //THIS FUNCTION should now give OK answers.
-#[cfg(not(target_os = "android"))]
 pub fn q_6_1b(compounds:&Vec<Compound>)->(String,String){
 //Find mass. from pH
 
@@ -2286,7 +2257,6 @@ pub fn q_6_1b(compounds:&Vec<Compound>)->(String,String){
 
 
 //THIS FUNCTION SHOULD BE OK.
-#[cfg(not(target_os = "android"))]
 pub fn q_6_2a(compounds:&Vec<Compound>)->(String,String){
 //Reaction between strong acids and bases.
 	//remove medically related compounds
@@ -2495,7 +2465,6 @@ pub fn q_6_2a(compounds:&Vec<Compound>)->(String,String){
 
 
 //THIS FUNCTION SHOULD GIVE THE RIGHT ANSWER.	
-#[cfg(not(target_os = "android"))]
 pub fn q_6_2b(compounds:&Vec<Compound>)->(String,String){
 //Reaction between strong acids and bases. Mass based.
 	//remove medically related compounds
@@ -2707,7 +2676,6 @@ pub fn q_6_2b(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)	
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_6_3(compounds:&Vec<Compound>)->(String,String){
 //Find degree of ionisation from concentration.
 	//remove medically related compounds
@@ -2773,7 +2741,6 @@ pub fn q_6_3(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)	
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_6_3b(compounds:&Vec<Compound>)->(String,String){
 //Find concentration from degree of ionisation.
 	//remove medically related compounds
@@ -2841,7 +2808,6 @@ pub fn q_6_3b(compounds:&Vec<Compound>)->(String,String){
 //Buffers
 //Buffers
 //Buffers
-#[cfg(not(target_os = "android"))]
 pub fn q_7_0(compounds:&Vec<Compound>)->(String,String){
 //pH as function of concs.
 	//remove medically related compounds
@@ -2965,7 +2931,6 @@ pub fn q_7_0(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }	
 
-#[cfg(not(target_os = "android"))]
 pub fn q_7_0b(compounds:&Vec<Compound>)->(String,String){
 //pH as function of compounds' volumes and concentrations.
 	//remove medically related compounds
@@ -3101,7 +3066,6 @@ pub fn q_7_0b(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }	
 
-#[cfg(not(target_os = "android"))]
 pub fn q_7_0c(compounds:&Vec<Compound>)->(String,String){
 //pH as function of compounds masses
 	//remove medically related compounds
@@ -3238,7 +3202,6 @@ pub fn q_7_0c(compounds:&Vec<Compound>)->(String,String){
 }	
 	
 	
-#[cfg(not(target_os = "android"))]
 pub fn q_7_1(compounds:&Vec<Compound>)->(String,String){
 //Concs as function of pH.
 	//remove medically related compounds
@@ -3375,7 +3338,6 @@ pub fn q_7_1(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_7_1b(compounds:&Vec<Compound>)->(String,String){
 //pH as function of compounds' volumes and concentrations. In reverse, get volume.
 	//remove medically related compounds
@@ -3527,7 +3489,6 @@ pub fn q_7_1b(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }	
 
-#[cfg(not(target_os = "android"))]
 pub fn q_7_2(compounds:&Vec<Compound>)->(String,String){
 //Change in buffer pH after addition of strong acid/base.
 	//remove medically related compounds
@@ -3767,7 +3728,6 @@ pub fn q_7_2(compounds:&Vec<Compound>)->(String,String){
 
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_7_3(compounds:&Vec<Compound>)->(String,String){
 //Concs as function of pH (total active ion given).
 	//remove medically related compounds
@@ -3914,7 +3874,6 @@ pub fn q_7_3(compounds:&Vec<Compound>)->(String,String){
 	(question,answer)
 }
 
-#[cfg(not(target_os = "android"))]
 pub fn q_7_3b(compounds:&Vec<Compound>)->(String,String){
 //Concs as a function of Osmolarity as function of pH (total active ion given).
 	//remove medically related compounds
@@ -4077,7 +4036,6 @@ pub fn q_7_3b(compounds:&Vec<Compound>)->(String,String){
 //Equilibirum constant questions:
 
 //Will it go left or right.
-#[cfg(not(target_os = "android"))]
 pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 	let (mut question,mut answer) = (String::with_capacity(500),String::with_capacity(500));
 	
@@ -4119,7 +4077,6 @@ pub fn q_5_0_pressure(reaction_lib:&Vec<Reaction>)->(String,String) {
 }
 
 //Enthalpy question 
-#[cfg(not(target_os = "android"))]
 pub fn q_5_0_enthalpy(reactions:&Vec<Reaction>)->(String,String) {
 	
 	let mut question = String::with_capacity(500);
@@ -4175,7 +4132,6 @@ pub fn q_5_0_enthalpy(reactions:&Vec<Reaction>)->(String,String) {
 
 //work out Keq from equilibrium concentrations.
 //UNFINISHED.
-#[cfg(not(target_os = "android"))]
 pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	
 	let mut question = String::with_capacity(500);
@@ -4341,7 +4297,6 @@ pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 //3) Case 1 + solids. (solids calculated seperately).
 //4) Case 2 + solids. (solids calculated seperately).
 //The solutions to other cases are too complex to cover in this kind of question.
-#[cfg(not(target_os = "android"))]
 pub fn q_5_2(reactions:&Vec<Reaction>)->(String,String){
 	let (mut q,mut a) = (String::with_capacity(1000),String::with_capacity(1000));
 	let enthalpic_error = ("Nothing to see here.".to_owned(),"Proceed to next question".to_owned());
@@ -4554,7 +4509,6 @@ Keq = {} and initial concentrations are as follows:\n\n",keq));
 //HOUSEKEEPING FUNCTIONS. BOILERPLATE FORMATTING. KEEP OUT.
 //HOUSEKEEPING FUNCTIONS. BOILERPLATE FORMATTING. KEEP OUT.
 
-#[cfg(not(target_os = "android"))]
 pub fn create_reaction_lib()->Vec<Reaction> {
 	vec![
 		//Reactions with Enthalpy.
