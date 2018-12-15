@@ -1,14 +1,14 @@
-use Compound;
-use Sscri;
-use czq;
+//use Compound;
+//use Sscri;
+//use czq;
 
-use rand;
-use rand::Rng;
+//use rand;
+//use rand::Rng;
 
-use czq::WARNING;
-use czq::TITLE;
-use czq::ABOUT;
-use CZ;
+//use czq::WARNING;
+//use czq::TITLE;
+//use czq::ABOUT;
+//use CZ;
 
 #[cfg(target_os = "android")]use jni::JNIEnv;
 #[cfg(target_os = "android")]use jni::objects::{JClass};
@@ -47,9 +47,9 @@ pub extern fn Java_chmq_example_owl_chmq_molesQCz_molesQuestionsCz<'a> (env: JNI
 		5=>czq::q_1_4(&compounds),
 		_=>czq::q_1_4b(&compounds),
 	};
-	q_a_text = q_a_text.sscri_android(CZ);
-	let (help,minihelp)=czq::helper(&q_a_text.0,&compounds).sscri_android(CZ);
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
+	q_a_text = q_a_text.sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
+	let (help,minihelp)=czq::helper(&q_a_text.0,&compounds);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -75,9 +75,9 @@ pub extern fn Java_chmq_example_owl_chmq_osmoticQCz_osmoticQuestionsCz (env: JNI
 		4=>czq::q_2_4(&compounds),
 		_=>czq::q_2_4s(&compounds),
 	};
-	q_a_text = q_a_text.sscri_android(CZ);
+	q_a_text = q_a_text.sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	let (help,minihelp)=czq::helper(&q_a_text.0,&compounds).sscri_android(CZ);
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -102,9 +102,9 @@ pub extern fn Java_chmq_example_owl_chmq_ionicQCz_ionicQuestionsCz (env: JNIEnv,
 		3=>czq::q_3_2c(&compounds),
 		_=>czq::q_3_1(&compounds),
 	};
-	q_a_text = q_a_text.sscri_android(CZ);
+	q_a_text = q_a_text.sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	let (help,minihelp)=czq::helper(&q_a_text.0,&compounds).sscri_android(CZ);
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -128,9 +128,9 @@ pub extern fn Java_chmq_example_owl_chmq_kspQCz_kspQuestionsCz (env: JNIEnv, cla
 		3=>czq::q_4_0(&compounds),
 		_=>czq::q_4_1b(&compounds),
 	};
-	q_a_text = q_a_text.sscri_android(CZ);
+	q_a_text = q_a_text.sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	let (help,minihelp)=czq::helper(&q_a_text.0,&compounds).sscri_android(CZ);
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -156,9 +156,9 @@ pub extern fn Java_chmq_example_owl_chmq_phQCz_pHQuestionsCz (env: JNIEnv, class
 		5=>czq::q_6_3(&compounds),
 		_=>czq::q_6_3b(&compounds),
 	};
-	q_a_text = q_a_text.sscri_android(CZ);
+	q_a_text = q_a_text.sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	let (help,minihelp)=czq::helper(&q_a_text.0,&compounds).sscri_android(CZ);
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -188,9 +188,9 @@ pub extern fn Java_chmq_example_owl_chmq_bufferQCz_bufferQuestionsCz (env: JNIEn
 		8=>czq::q_7_3(&compounds),
 		_=>czq::q_7_3b(&compounds),
 	};
-	q_a_text = q_a_text.sscri_android(CZ);
+	q_a_text = q_a_text.sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	let (help,minihelp)=czq::helper(&q_a_text.0,&compounds).sscri_android(CZ);
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_android(CZ,"style=\"white-space:pre-wrap;\"");
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")

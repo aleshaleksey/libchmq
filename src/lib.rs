@@ -1,5 +1,13 @@
 ///The central module of libchmq.
 
+
+// compiles with :
+//	cargo rustc --release --features="libc" --target=arm-linux-androideabi -- -C linker="/home/alesha/NDK/arm/bin/arm-linux-androideabi-clang" --crate-type="cdylib"
+//	cargo rustc --release --features="libc" --target=x86_64-linux-android  -- -C linker="/home/alesha/NDK/x86_64/bin/x86_64-linux-android-clang" --crate-type="cdylib"
+//	cargo rustc --release --features="libc" --target=aarch64-linux-android -- -C linker="/home/alesha/NDK/arm64/bin/aarch64-linux-android-clang" --crate-type="cdylib"
+
+
+
 #[cfg(target_os = "android")]extern crate libc;
 #[cfg(target_os = "android")]extern crate jni;
 #[macro_use]extern crate serde_derive;
@@ -12,6 +20,7 @@ pub mod czq;
 
 pub mod anden;
 pub mod andcz;
+
 
 
 #[allow(unused_mut)]
@@ -530,7 +539,9 @@ pub const AB_Z:f64=-273.15;
 pub trait Sscri {
 	fn sscri(self,lang:u8)->(String,String);
 	fn sscri_html(self,lang:u8)->(String,String);
-	fn sscri_android(self,lang:u8)->(String,String);
+	fn sscri_android_textview_html(self,lang:u8)->(String,String);
+	fn sscri_android_html(self,lang:u8)->(String,String);
+	fn sscri_html_body(self,lang:u8,format:&str)->String;
 }
 
 impl Sscri for (String,String) {	
@@ -546,13 +557,62 @@ impl Sscri for (String,String) {
 	
 	//Scientific script from ordinary script using html sub and superscript.
 	//Android version which uses <sup><small></small></sup>
-	fn sscri_android(self,lang:u8)->Self {
+	fn sscri_android_textview_html(self,lang:u8)->Self {
 		let (a,b) = (sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true));
 		
 		(
 			a.lines().map(|x| format!("<p>{}</p>",x)).collect::<String>(),
 			b.lines().map(|x| format!("<p>{}</p>",x)).collect::<String>()
 		)
+	}
+	
+	//Scientific script from ordinary script using html sub and superscript.
+	//Android version which uses <sup><small></small></sup>
+	fn sscri_android_html(self,lang:u8)->Self {
+		(sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true))
+	}
+	
+	//Add <html><body><pre #format></pre></body></html> to a string.
+	fn sscri_html_body(self,lang:u8,format:&str)->String {
+		let (a,b) = (sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true));
+		format!("<html><body><pre {}>{}{}</pre></body></html>",format,a,b)
+	}
+}
+
+impl Sscri for String {	
+	
+	//Scientific script from ordinary script using rare unicode glyphs.
+	fn sscri(self,lang:u8)->(String,String){		
+		let a = sscri_par(self,lang);
+		(a.clone(),a)
+	}
+	
+	//Scientific script from ordinary script using html sub and superscript.
+	fn sscri_html(self,lang:u8)->(String,String) {
+		let a = sscri_par_html(self,lang,false);
+		(a.clone(),a)
+	}
+	
+	//Scientific script from ordinary script using html sub and superscript.
+	//Android version which uses <sup><small></small></sup>
+	fn sscri_android_textview_html(self,lang:u8)->(String,String) {
+		let a = sscri_par_html(self,lang,true).lines()
+										.map(|x| format!("<p>{}</p>",x))
+										.collect::<String>();
+		(a.clone(),a)
+	}
+	
+	//Scientific script from ordinary script using html sub and superscript.
+	//Android version which uses <sup><small></small></sup>
+	fn sscri_android_html(self,lang:u8)->(String,String) {
+		let a = sscri_par_html(self,lang,true).lines().map(|x| format!("<p>{}</p>",x)).collect::<String>();
+		(a.clone(),a)
+	}
+	
+	//Add <html><body><pre #format></pre></body></html> to a string.
+	fn sscri_html_body(self,lang:u8,format:&str)->Self {
+		let a = sscri_par_html(self,lang,true);
+		format!("<html><body><pre {}>{}</pre></body></html>",format,a)
 	}
 }
 
