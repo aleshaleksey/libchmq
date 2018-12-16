@@ -10,14 +10,16 @@ use enq::WARNING;
 use enq::TITLE;
 use enq::ABOUT;
 
-use jni::JNIEnv;
-use jni::objects::{JClass};
-use jni::sys::jstring;
+#[cfg(target_os = "android")]use jni::JNIEnv;
+#[cfg(target_os = "android")]use jni::objects::{JClass};
+#[cfg(target_os = "android")]use jni::sys::jstring;
+
+pub const STYLE:&str = "style=\"white-space:pre-wrap;font-family:\"sans-serif\"\"";
 
 #[allow(non_snake_case)]
 #[no_mangle]
 #[allow(unused_variables)]
-
+#[cfg(target_os = "android")]
 pub extern fn Java_chmq_example_owl_chmq_infoEn_infoEn (env: JNIEnv, class: JClass)->jstring {
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",TITLE,ABOUT,WARNING,WARNING))
@@ -51,9 +53,9 @@ pub extern fn Java_chmq_example_owl_chmq_molesQEn_molesQuestionsEn<'a> (env: JNI
 	};
 	
 	let (mut help,minihelp)=enq::helper(&q_a_text.0,&compounds);
-	q_a_text.1 = q_a_text.1.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	help =help.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
+	q_a_text.1 = q_a_text.1.sscri_html_body(EN,STYLE);
+	help =help.sscri_html_body(EN,STYLE);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,STYLE);
 	
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
@@ -82,9 +84,9 @@ pub extern fn Java_chmq_example_owl_chmq_osmoticQEn_osmoticQuestionsEn (env: JNI
 	};
 	
 	let (mut help,minihelp)=enq::helper(&q_a_text.0,&compounds);
-	q_a_text.1 = q_a_text.1.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	help =help.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
+	q_a_text.1 = q_a_text.1.sscri_html_body(EN,STYLE);
+	help =help.sscri_html_body(EN,STYLE);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,STYLE);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -111,9 +113,9 @@ pub extern fn Java_chmq_example_owl_chmq_ionicQEn_ionicQuestionsEn (env: JNIEnv,
 	};
 	
 	let (mut help,minihelp)=enq::helper(&q_a_text.0,&compounds);
-	q_a_text.1 = q_a_text.1.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	help =help.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
+	q_a_text.1 = q_a_text.1.sscri_html_body(EN,STYLE);
+	help =help.sscri_html_body(EN,STYLE);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,STYLE);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -139,9 +141,9 @@ pub extern fn Java_chmq_example_owl_chmq_kspQEn_kspQuestionsEn (env: JNIEnv, cla
 	};
 	
 	let (mut help,minihelp)=enq::helper(&q_a_text.0,&compounds);
-	q_a_text.1 = q_a_text.1.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	help =help.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
+	q_a_text.1 = q_a_text.1.sscri_html_body(EN,STYLE);
+	help =help.sscri_html_body(EN,STYLE);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,STYLE);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -169,9 +171,9 @@ pub extern fn Java_chmq_example_owl_chmq_phQEn_pHQuestionsEn (env: JNIEnv, class
 	};
 	
 	let (mut help,minihelp)=enq::helper(&q_a_text.0,&compounds);
-	q_a_text.1 = q_a_text.1.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	help =help.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
+	q_a_text.1 = q_a_text.1.sscri_html_body(EN,STYLE);
+	help =help.sscri_html_body(EN,STYLE);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,STYLE);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
@@ -203,9 +205,9 @@ pub extern fn Java_chmq_example_owl_chmq_bufferQEn_bufferQuestionsEn (env: JNIEn
 	};
 	
 	let (mut help,minihelp)=enq::helper(&q_a_text.0,&compounds);
-	q_a_text.1 = q_a_text.1.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	help =help.sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
-	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,"style=\"white-space:pre-wrap;\"");
+	q_a_text.1 = q_a_text.1.sscri_html_body(EN,STYLE);
+	help =help.sscri_html_body(EN,STYLE);
+	q_a_text.0 = format!("{}\n\n{}",q_a_text.0,minihelp).sscri_html_body(EN,STYLE);
 	
 	env.new_string(format!("{}ZQ_QZ{}ZQ_QZ{}ZQ_QZ{}",q_num_text,q_a_text.0,q_a_text.1,help))
 	   .expect("Couldn't create java string!")
