@@ -62,12 +62,21 @@ let (q,a) = libchmq::enq::q_1_0(&compounds).sscri(libchmq::EN);
 let (q_html,a_html) = libchmq::enq::q_1_0(&compounds).sscri_html(libchmq::EN);
 
 //Generate text for a question using android textView compatible format.
+//lines are put between <p><\p>, and superscript/subscript uses <sup><small>#</small></sup>
 //NB Html.fromHtml() needs to be used.
-let (q_and,a_and) = libchmq::enq::q_1_0(&compounds).sscri_and(libchmq::EN);
+let (q_and,a_and) = libchmq::enq::q_1_0(&compounds).sscri_android_textview_html(libchmq::EN);
+
+
+//Generate text for a question using android webView compatible format
+//using <html><body {#style}>{#content}</body></html>
+//NB text still needs to be encoded at "the other end" if used in an android app.
+let (q_hb,a_hb) = libchmq::enq::q_1_0(&compounds)
+                               .sscri_html_body(libchmq::EN,"style=\"white-space:pre-wrap;\"");
 
 println!("Question:\n{}\n\nAnswer:\n{}",q,a);
 println!("Now for html compatible subscripts/superscripts.\nQuestion:\n{}\n\nAnswer:\n{}",q_html,a_html);
 println!("Now for android textView compatible format.\nQuestion:\n{}\n\nAnswer:\n{}",q_and,a_and);
+println!("Now for android webView compatible format.\nQuestion:\n{}\n\nAnswer:\n{}",q_hb,a_hb);
 ```
 
 The text of a question can then be scanned with the "helper" function,
@@ -94,7 +103,7 @@ The lib module contains a wrapper function "generate_questions",
 which takes pointers to a vector of question functions and generates a random question.<br>
 
 ```Rust
-use libchmq::{self,enq};
+use libchmq::{self,enq,EN,SYMBOL};
 
 //Initialise library.
 let mut compounds = Vec::with_capacity(200);
