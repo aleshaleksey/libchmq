@@ -1,30 +1,5 @@
 
 
-// compile with rustc --crate-type="cdylib" libchmqA.rs -O  -C lto
-// windows: rustc -O --crate-type="cdylib" libchmqA.rs -C lto --target=x86_64-pc-windows-gnu -C linker=x86_64-w64-mingw32-gcc
-//On owlbear/fluffy
-// arm: 
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=arm-linux-androideabi -C linker="/media/owl/4c0dba38-49f6-4593-8d3e-0134158630f0/home/alesha/mobile_compilers/arm/bin/arm-linux-androideabi-clang"
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=arm-linux-androideabi -C linker="/home/alesha/NDK/arm/bin/arm-linux-androideabi-clang"
-// armv7: 
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=armv7-linux-androideabi -C linker="/media/owl/4c0dba38-49f6-4593-8d3e-0134158630f0/home/alesha/mobile_compilers/arm/bin/arm-linux-androideabi-clang"
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=armv7-linux-androideabi -C linker="/home/alesha/NDK/arm/bin/arm-linux-androideabi-clang"
-// x86_64: 
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=x86_64-linux-android -C linker="/media/owl/4c0dba38-49f6-4593-8d3e-0134158630f0/home/alesha/mobile_compilers/x86_64/bin/x86_64-linux-android-clang"
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=x86_64-linux-android -C linker="/home/alesha/NDK/x86_64/bin/x86_64-linux-android-clang"
-// arm64: 
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=aarch64-linux-android -C linker="/media/owl/4c0dba38-49f6-4593-8d3e-0134158630f0/home/alesha/mobile_compilers/arm64/bin/aarch64-linux-android-clang"
-//	rustc --crate-type="cdylib" libchmqC.rs -O -C lto --target=aarch64-linux-android -C linker="/home/alesha/NDK/arm64/bin/aarch64-linux-android-clang"
-//
-// /home/owl/android-ndk-r16b/build/tools/make_standalone_toolchain.py --api 14 --arch arm --install-dir NDK/arm first. (Make sure libraries are in toolchain lib.)
-// /media/owl/5E4A-39E6/android-ndk-r16b/build/tools/make_standalone_toolchain.py --api 14 --arch arm --install-dir /home/owl/kotlincodes/chmquiz-lib/src/NDK/arm first. (Make sure libraries are in toolchain lib.)
-// /media/owl/4c0dba38-49f6-4593-8d3e-0134158630f0/home/alesha/android-ndk-r16b/build/tools/make_standalone_toolchain.py --api 14 --arch aarch64 --install-dir /media/owl/4c0dba38-49f6-4593-8d3e-0134158630f0/home/alesha/mobile_compilers/aarch first. (Make sure libraries are in toolchain lib.)
-// NB when compiling to Android, if toolchain is not in the /usr/bin directory,
-// chmod must be applied in order to unseal the toolchain and allow the linker to do its magic.
-//Java_chmq_examples_owl_mechqu_bufferQ_bufferQuestions
-// NB: cargo rustc --release --target=arm-linux-androideabi -- -C linker="<LINKER DIR>"
-//  cargo rustc --release --target=arm-linux-androideabi -- -C linker="/home/alesha/NDK/arm/bin/arm-linux-androideabi-clang"
-// Can also be used from the directory with libchmqC's cargo.toml.
 	
 #![allow(dead_code)]
 #![allow(unused_imports)]
