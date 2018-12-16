@@ -9,11 +9,6 @@
 /// has speed of writing rather than "elegance" in mind.
 /// It does not currently implement a GUI.
 
-//when compiling for windows uncomment the extra lines in write_test() function. (and \n to \r\n)
-//when compiling for windows use: cargo rustc --bin chmquiz --release --target=x86_64-pc-windows-gnu -- -C linker=x86_64-w64-mingw32-gcc
-//when compiling for mac (experimental) use: cargo rustc --bin chmquiz --release --target=x86_64-apple-darwin -- -C linker=x86_64-w64-mingw32-gcc
-
-
 //use std::fs;
 use rand;
 use rand::Rng;
