@@ -36,16 +36,16 @@ pub const TITLE:&str = "
   Med Chem Quiz V.1.1.1   
   2018-10-28              ";
 pub const WARNING:&'static str="
-Tento soubor cviční je navržen, aby se uživatel zlepšil v chemických výpočtech. \
-Primárně je určen k procvičení uživatele ve výpočtech pro modul \"Výpočty v lékařské chemii\". \
+Tento soubor cvičení byl navržen, za účelem zlepšit schopnosti uživatele v řešení chemických výpočtů. \
+Primárně je určen k procvičování uživatele ve výpočtech pro modul \"Výpočty v lékařské chemii\". \
 Nicméně má tři významné omezení:
 
 1) Jedná se o cvičení, \
-které by mělo zlepšit dovednosti uživatele ve výpočtech, \
+které by mělo zlepšit dovednosti uživatele v řešení výpočetních úloh, \
 ale je nepravděpodobné, že pomůže pochopit dané téma. 
 
 2) Je důležité vyzkoušet široké spektrum výpočtů, aby se uživatel stal zběhlým v \"práci s čísly\", \
-ale otázky v programu využívají pouze omezený počet pevně daných vzorů zadání. \
+ale otázky generované programem využívají pouze omezený počet pevně daných vzorů. \
 Je tedy důležité, aby uživatel čerpal otázky i z jiných zdrojů.
 
 3) Otázky také využívají omezené vzory slovosledu. \
@@ -179,15 +179,15 @@ pub fn q_1_0(compounds:&Vec<Compound>)->(String,String) {
 	//println!("m: {}",m);
 	//println!("answer: {}",answer);
 	
-	let question=format!("Kolik molů {} je obsaženo v {} sloučeniny?",
-		c.name[2],
+	let question=format!("Kolik molů obsahuje {} o hmotnosti {}?",
+		c.name[1],
 		format!("{}g",dis(m)));
 		
-	let answer=format!("Látkové množství {} může být získáno vydělením hmotnosti molární hmotností dané látky.\n\n {}",
+	let answer=format!("Látkové množství {} lze získat vydělením hmotnosti molární hmotností dané látky.\n\n {}",
 		c.name[2],
 		format!(" Odpověď = {}mol",dis(answer))
 		);
-	(question,answer)	
+	(question,answer)
 }
 
 
@@ -207,12 +207,11 @@ pub fn q_1_1(compounds:&Vec<Compound>)->(String,String){
 	//println!("n: {}",n);
 	//println!("answer: {}",answer);
 	
-	let question=format!("Kolik gramů {} je obsaženo v {} pevné substance?",
-		c.name[2],
-		format!("{}mol",dis(n))
-	);
+	let question=format!("Jakou hmotnost má {} {}?",
+		format!("{}mol",dis(n))),
+		c.name[2];
 
-	let answer=format!("Hmotnost {} může být vypočtena vynásobením látkového množství {} jeho molarní hmotností.\n\n{}\n",
+	let answer=format!("Hmotnost {} lze vypočítat vynásobením látkového množství {} jeho molarní hmotností.\n\n{}\n",
 		c.name[2],
 		c.name[2],
 		format!("Odpověď = {}g",dis(answer))
@@ -248,13 +247,13 @@ pub fn q_1_2(compounds:&Vec<Compound>)->(String,String){
 	//println!("v_litre: {}",v_litre);
 	//println!("answer: {}",answer);
 	
-	let question=format!("Jaká je molarita roztoku {}, který vznikl rozpuštěním {}g pevné substance v roztoku o objemu {} l?",
-		c.name[2],
+	let question=format!("Jaká je molarita roztoku, který vznikl rozpuštěním {}g {}, pokud je celkový objem roztoku {} l?",
 		dis(m),
+		c.name[2],
 		v_litre);
 	
 	let answer=format!("Látkové množství {}: {}\n\
-	Koncentrace {} se získá vydělením látkového množství objemem roztoku.\
+	Koncentrace {} lze získat vydělením látkového množství objemem roztoku.\
 	\n\n Odpověď = {}mol/l",
 		c.name[2],
 		m/c.mmass,
@@ -297,7 +296,7 @@ pub fn q_1_2b(compounds:&Vec<Compound>)->(String,String){ //INCOMPLETE
 		v_litre,
 		c.name[2]);
 	
-	let answer=format!("Látkové množství {} může být získáno vynásobením objemu roztoku jeho koncentrací.\
+	let answer=format!("Látkové množství {} lze získat vynásobením objemu roztoku jeho koncentrací.\
 	\n\n Odpověď = {}mol",
 		c.name[2],
 		dis(answer));
@@ -379,19 +378,19 @@ pub fn q_1_4(compounds:&Vec<Compound>)->(String,String){
 	
 	let question:String = if (diluting==true) & (find_c==true) {
 		format!("Roztok {} má koncentraci {}mol/l a objem {}l. \
-		Tento roztok byl následně zředěn na celkový objem {}l. \n Jaká je koncentrace získaného roztoku?",
+		Tento roztok byl zředěn na celkový objem {}l. \n Jaká je koncentrace získaného roztoku?",
 		c.name[2],dis(c_1),dis(v_1),dis(v_2))
 	}else if (diluting==true) & (find_c==false) {
 		format!("Roztok {} má koncentraci {}mol/l a objem {}l. \
-		Tento roztok byl následně zředěn na konečnou koncentraci {}mol/l. \n Jaký objem bude mít získaný roztok?",
+		Tento roztok byl zředěn na konečnou koncentraci {}mol/l. \n Jaký objem bude mít zředěný roztok?",
 		c.name[2],dis(c_1),dis(v_1),dis(c_2))
 	}else if (diluting==false) & (find_c==true) {
 		format!("Zředěný roztok {} má koncentraci {}mol/l a objem {}l. \
-		Původní objem roztoku byl {}l. \n Jaká byla koncentrace původního roztoku?",
+		Objem původního roztoku byl {}l. \n Jaká byla koncentrace původního roztoku?",
 		c.name[2],dis(c_2),dis(v_2),dis(v_1))
 	}else{
 		format!("Zředěný roztok {} má koncentraci {}mol/l a objem {}l. \
-		Původní koncentrace roztoku byla {}mol/l. \n Jaký byl objem původního roztoku?",
+		Koncentrace původního roztoku byla {}mol/l. \n Jaký byl objem původního roztoku?",
 		c.name[2],dis(c_2),dis(v_2),dis(c_1))
 	};
 	
@@ -447,11 +446,11 @@ pub fn q_1_4b(compounds:&Vec<Compound>)->(String,String){
 	//PRINT QUESTION
 	let question:String = if (diluting==true) & (find_c==true) {
 		format!("Roztok {} má koncentraci {}mol/l a objem {}l. \
-		Následně je naředěn {}. \nJaká je koncentrace získaného roztoku?",
+		Tento roztok byl naředěn {}. \nJaká je koncentrace získaného roztoku?",
 		c.name[2],dis(c_1),dis(v_1),fold_or_to)
 	}else if (diluting==true) & (find_c==false) {
 		format!("Roztok {} má koncentraci {}mol/l a objem {}l. \
-		Následně je naředěn {}. \
+		Tento roztok byl naředěn {}. \
 		\nJaký je objem získaného roztoku? \
 		\nJaký objem rozpouštědla byl do roztoku přidán?",
 		c.name[2],dis(c_1),dis(v_1),fold_or_to)
@@ -524,7 +523,7 @@ pub fn q_2_0(compounds:&Vec<Compound>)->(String,String){
 			dis(m),
 			c.name[2]);
 	
-	let answer = format!("Počet osmoticky aktivních částic {} může být vypočítán sečtením látkových množství jednotlivých částic vzniklých disociací.\n\n {}\n",
+	let answer = format!("Počet osmoticky aktivních částic {} lze vypočítat sečtením látkových množství jednotlivých částic vzniklých disociací.\n\n {}\n",
 		c.name[2],
 		format!("Odpověď = {}osmol",dis(answer))
 	);
@@ -614,7 +613,7 @@ pub fn q_2_2(compounds:&Vec<Compound>)->(String,String){
 	
 	let v_ve = if v_litre<2.0 {"v"}else{"ve"}; 
 
-	let question = format!("Jaká je osmolarita roztoku, který obsahuje {}g {} {} {} l?",
+	let question = format!("Jaká je osmolarita roztoku, který obsahuje {}g {} {} {} l roztoku?",
 		dis(m),
 		c.name[2],
 		v_ve,
@@ -666,7 +665,7 @@ pub fn q_2_3(compounds:&Vec<Compound>)->(String,String){
 
 	let v_ve = if v_litre<2.0 {"v"}else{"ve"}; 
 	
-	let question = format!("Roztok {} má osmolaritu {}osmol/l. Jaká je hmotnost {} {} {}l?",
+	let question = format!("Roztok {} má osmolaritu {}osmol/l. Jaká je hmotnost {} {} {} l tohoto roztoku?",
 		c.name[2],
 		dis(osm),
 		c.name[2],
@@ -745,13 +744,13 @@ pub fn q_2_4(compounds:&Vec<Compound>)->(String,String){
 		))
 	};
 	let question_b=question_b.join("\n");
-	let v_ve = if v_litre<=1.0 {"v"}else{"ve"}; 
-	let question_c=format!("{} {} l při {} stupních Celsia?",v_ve,v_litre,temp_c);
+	let v_ve = if v_litre<2.0 {"v"}else{"ve"}; 
+	let question_c=format!("{} {} l roztoku při {} stupních Celsia?",v_ve,v_litre,temp_c);
 	
 	let question = format!("{}\n{}\n{}\n",question_a,question_b,question_c);
 	
 	//Generate answer text.
-	let ans_a=format!("Teplota ( v Kelvinech) = {}",temp_k);
+	let ans_a=format!("Teplota (v Kelvinech) = {}",temp_k);
 	let ans_b=format!("Osmolarita = {}",osmoles/v_litre);
 	let ans_c=format!("{}",format!("Odpověď = {} kPa",&ff(4,answer)));
 	let answer = format!("{}\n{}\n\n {}\n",ans_a,ans_b,ans_c);
@@ -839,20 +838,20 @@ pub fn q_2_4s(compounds:&Vec<Compound>)->(String,String){
 	};
 	let question_b=question_b.join("\n");
 	let question_c=format!("...a neznámé množství {}.",comp_vec[0].name[2]);
-	let question_d=format!("Jestliže je celkový osmotický tlak {}kPa při {} stupních Celsia, jaká je hmotnost {} v roztoku?",
-		dis(osm_p),
+	let question_d=format!("Jaká je hmotnost {} v tomto roztoku, jestliže je celkový osmotický tlak při {} stupních Celsia {}kPa?",
+		comp_vec[0].name[2],
 		temp_c,
-		comp_vec[0].name[2]
+		dis(osm_p)
 	);
 	let question = format!("{}\n{}\n{}\n{}\n",question_a,question_b,question_c,question_d);
 	
 	//Generate answer text.
-	let ans_a=format!("Teplota (v Kelvinech) = {}",temp_k);	
-	let ans_b=format!("Osmolarita (všechna řešení) = {}",osm_ity);
-	let ans_c=format!("Osmolarita (všechna řešení kromě {}) = {}",comp_vec[0].name[2],osm_ity_a);
-	let ans_d=format!("Osmolarita {} = {}",comp_vec[0].name[2],osm_ity_b);
-	let ans_e=format!("Molarita {} = {}",comp_vec[0].name[2],osm_ity_b/sol_x);
-	let ans_f=format!("{}",format!("Odpoveď = {}g",dis(m_comps[0])));
+	let ans_a=format!("Teplota (v Kelvinech) = {} K",temp_k);	
+	let ans_b=format!("Osmolarita (všechna řešení) = {} osmol/l",osm_ity);
+	let ans_c=format!("Osmolarita (všechna řešení kromě {}) = {} osmol/l",comp_vec[0].name[2],osm_ity_a);
+	let ans_d=format!("Osmolarita {} = {} osmol/l",comp_vec[0].name[2],osm_ity_b);
+	let ans_e=format!("Molarita {} = {} mol/l",comp_vec[0].name[2],osm_ity_b/sol_x);
+	let ans_f=format!("{}",format!("Odpoveď = {} g",dis(m_comps[0])));
 	let answer = format!("{}\n{}\n{}\n{}\n{}\n\n {}\n",ans_a,ans_b,ans_c,ans_d,ans_e,ans_f);
 	(question,answer)
 }
@@ -950,7 +949,7 @@ pub fn q_3_1(compounds:&Vec<Compound>)->(String,String){
 		spq+= conc*(x.0 as f64)*(x.2 as f64)*(x.2 as f64)/2.0;
 	};
 		
-	let question = format!("Jaká je koncentrace roztoku {} o iotnové síle {}?",c.name[2],dis_u(spq));
+	let question = format!("Roztok {} má iotnovou sílu {}. Jaká je jeho koncentrace?",c.name[2],dis_u(spq));
 	
 	let mut answer_a:Vec<String>=Vec::new();
 	for x in c.solutes.iter(){
@@ -961,7 +960,7 @@ pub fn q_3_1(compounds:&Vec<Compound>)->(String,String){
 			answer_a.push(format!("{} netvoří ionty",x.1))
 		}
 	};
-	let answer_b=format!("{}",format!("Odpověď = {}mol/l",dis(conc)));
+	let answer_b=format!("{}",format!("Odpověď = {} mol/l",dis(conc)));
 	let answer_a=answer_a.join("\n");
 	let answer = format!("{}\n\n {}\n",answer_a,answer_b);
 	(question,answer)
@@ -1092,8 +1091,8 @@ pub fn q_3_2b(compounds:&Vec<Compound>)->(String,String){
 	let ans_a=ans_a.join("\n");
 	let ans_b=format!("\n2 x I/C = {}",factor);
 	let ans_c=format!("Proto je koncentrace {} = {} mol/l",c.name[2],conc);
-	let ans_d=format!("Látkové množstvý = {} mol",moles);
-	let ans_e=format!("{}",format!("Odpověď = {}l",dis(v_litre)));
+	let ans_d=format!("Látkové množství = {} mol",moles);
+	let ans_e=format!("{}",format!("Odpověď = {} l",dis(v_litre)));
 	let answer = format!("{}\n{}\n{}\n{}\n\n {}\n",ans_a,ans_b,ans_c,ans_d,ans_e);
 	(question,answer)
 }
@@ -1171,7 +1170,7 @@ pub fn q_3_2c(compounds:&Vec<Compound>)->(String,String){
 	};
 	ans_a.push(format!("\n2 x I/C= {}",factor));
 	ans_a.push(format!("Proto je koncentrace {} = {} mol/l",c.name[2],&ff(4,conc)));
-	let ans_b=format!("{}",format!("Odpověď = {}g",dis(m)));
+	let ans_b=format!("{}",format!("Odpověď = {} g",dis(m)));
 	let ans_a=ans_a.join("\n");
 	let answer = format!("{}\n\n {}\n",ans_a,ans_b);
 	(question,answer)
@@ -1180,6 +1179,12 @@ pub fn q_3_2c(compounds:&Vec<Compound>)->(String,String){
 
 
 pub fn q_4_0(compounds:&Vec<Compound>)->(String,String){
+	
+	
+//Calculate Ksp from solubility
+//Calculate Ksp from solubility
+//Calculate Ksp from solubility
+//Calculate Ksp from solubility
 //Calculate Ksp from solubility
 	
 	//generate compound. NB for now compounds MUST have more than one solute.
@@ -1220,7 +1225,7 @@ pub fn q_4_0(compounds:&Vec<Compound>)->(String,String){
 	let multiple:String= if multiple==1{"".to_owned()}else{format!("{}",multiple)};
 	
 	//PRINT QUESTION
-	let question = format!("Jaké je Ksp {}, jestliže je rozpustnost látky za daných podmínek {}g/100ml?",
+	let question = format!("Jaké je Ksp {}, jestliže je rozpustnost této látky za daných podmínek {} g/100ml?",
 		c.name[2],
 		dis(s_m_100));
 	
@@ -1247,7 +1252,7 @@ pub fn q_4_0(compounds:&Vec<Compound>)->(String,String){
 	let mut ans_b:Vec<String>=Vec::new();
 	ans_b.push(format!("{}",format!("Odpověď = {}",dis_u(answer))));
 	if c.solubility*10.0/c.mmass>1.0{
-		ans_b.push(format!("Pečlivě dodržujte - tato metoda pro výpočet Ksp by neměla být používána pro dobře rozpustné sloučeniny jako {}.",
+		ans_b.push(format!("Pečlivě dodržujte - tato metoda pro výpočet Ksp by neměla být používána pro dobře rozpustné sloučeniny jako je {}.",
 		c.name[1]))
 	}else{
 		ans_b.push(format!(""))
@@ -1332,9 +1337,9 @@ pub fn q_4_0a(compounds:&Vec<Compound>)->(String,String){
 	let ans_a=ans_a.join("");
 	
 	let mut ans_b:Vec<String>=Vec::new();
-	ans_b.push(format!("{}",format!("Odpověď = {}g/100ml",dis(s_m_100))));
+	ans_b.push(format!("{}",format!("Odpověď = {} g/100ml",dis(s_m_100))));
 	if c.solubility*10.0/c.mmass>1.0{
-		ans_b.push(format!("Pečlivě dodržujte - tato metoda pro výpočet Ksp by neměla být používána pro dobře rozpustné sloučeniny jako {}.",c.name[1]));
+		ans_b.push(format!("Pečlivě dodržujte - tato metoda pro výpočet Ksp by neměla být používána pro dobře rozpustné sloučeniny jako je {}.",c.name[1]));
 	}else{
 		ans_b.push(format!(""));
 	};
@@ -1415,8 +1420,8 @@ pub fn q_4_1(compounds:&Vec<Compound>)->(String,String){
 	//PRINT QUESTION
 	let question = format!("\
 			Za daných podmínek má {} hodnotu Ksp {}. \
-			Jestliže [{}] má koncentraci {}mol/l, při jaké molární koncentraci {} \
-			začně precipitovat z roztoku?",
+			Jestliže je [{}] {} mol/l, při jaké molární koncentraci \
+			začně {} precipitovat z roztoku?",
 			c.name[1],dis_u(ksp),known.0,dis(c_known),unknown.0);
 	
 	//PRINT ANSWER
@@ -1435,7 +1440,7 @@ pub fn q_4_1(compounds:&Vec<Compound>)->(String,String){
 	//println!("\nKsp = {}s^{}",multiple,power);
 	//println!("s=(Ksp/{})^(1/{})",multiple,power);
 
-	let ans_b=format!("{}",format!("Odpověď = {}mol/l\n",dis(c_unknown)));
+	let ans_b=format!("{}",format!("Odpověď = {} mol/l\n",dis(c_unknown)));
 	let ans_a=ans_a.join("");
 	let answer = format!("{}\n\n {}\n",ans_a,ans_b);
 	(question,answer)		
@@ -1508,9 +1513,9 @@ pub fn q_4_1b(compounds:&Vec<Compound>)->(String,String){
 	
 	//PRINT QUESTION
 	let question = format!("\
-			Rozpustnost {} za daných podmínek je {}g/100ml. \
-			Jestliže je [{}] {}mol/l, při jaké [{}] {} \
-			začne precipitovat z roztoku?",
+			Rozpustnost {} je za daných podmínek {} g/100ml. \
+			Jestliže je [{}] {} mol/l, při jaké [{}] \
+			začne {} precipitovat z roztoku?",
 			c.name[2],dis(s_m_100),known.0,dis(c_known),unknown.0,unknown.0);
 	
 	//PRINT ANSWER
@@ -1604,7 +1609,7 @@ pub fn q_6_0(compounds:&Vec<Compound>)->(String,String){
 	};
 	
 	//Print Question.
-	let question = format!("Jaké je pH roztoku {}, jestliže je jeho koncentrace {}mol/l?",
+	let question = format!("Jaké je pH roztoku {}, jestliže je jeho koncentrace {} mol/l?",
 	c.name[2],dis(conc));
 	
 	//Print Answer.
@@ -1709,7 +1714,7 @@ pub fn q_6_0b(compounds:&Vec<Compound>)->(String,String){
 		ans_a.push(format!("pH = 7 + 0.5 x (pKa + log({} x c))",n));
 		ans_a.push(format!("log({} x c) = 2 x (pH - 7) - pKa",n));
 	};
-	let ans_b=format!("{}",format!("Odpověď = {}mol/l",dis(conc)));
+	let ans_b=format!("{}",format!("Odpověď = {} mol/l",dis(conc)));
 	let ans_c=if conc>c.solubility*c.mmass/10.0 {
 		format!("(Jedná se o poněkud nesmyslnou otázku, protože \"správná\" odpověď překračuje rozpustnost sloučeniny).")
 	}else{
@@ -1901,7 +1906,7 @@ pub fn q_6_1b(compounds:&Vec<Compound>)->(String,String){
 		ans_a.push(format!("log({} x c) = 2 x (pH - 7) - pKa",n));
 	};
 	let ans_c=if conc>c.solubility*c.mmass/10.0 {
-		format!("(Jedná se o poněkud nesmyslnou otázku protože \"správná\" odpověď překračuje rozpustnost sloučeniny).")
+		format!("(Jedná se o poněkud nesmyslnou otázku, protože \"správná\" odpověď překračuje rozpustnost sloučeniny).")
 	}else{
 		format!("")
 	};
@@ -2040,7 +2045,7 @@ pub fn q_6_2a(compounds:&Vec<Compound>)->(String,String){
 		
 	
 	//Print Question.
-	let question = format!("{}l {} o koncentraci {}mol/l bylo přidáno k {}l {} o koncentraci {}mol/l. \
+	let question = format!("{} l {} o koncentraci {} mol/l bylo přidáno k {} l {} o koncentraci {} mol/l. \
 		 Jaké je pH výsledného roztoku?",
 		 dis(v_a),
 		 a.name[2],
@@ -2070,7 +2075,7 @@ pub fn q_6_2a(compounds:&Vec<Compound>)->(String,String){
 		if (mol_h>mol_oh) & (a.use_weak==false) {
 			ans_a.push(format!("Přebytek silné kyseliny: použijte pH = -log[H+]"))
 		}else if mol_oh>mol_h {
-			ans_a.push(format!("Přebytek silné báze: pouzijte pH = 14+log({}[{}({}-)]",b_bron.1,b_bron.0,b_bron.1))
+			ans_a.push(format!("Přebytek silné báze: použijte pH = 14+log({}[{}({}-)]",b_bron.1,b_bron.0,b_bron.1))
 		}else if ((mol_h-mol_oh)/mol_oh>=10.0) & (a.use_weak==true) {
 			ans_a.push(format!("Velký přebytek slabé kyseliny: použijte pH = 0.5 x (pKa-log({} x [{}]))",a_bron.1,a.formula[0]))
 		}else if ((mol_h-mol_oh)/mol_oh<10.0)
@@ -4366,7 +4371,7 @@ pub fn create_compound_lib(mut a:Vec<Compound>)->Vec<Compound>{
 			med: (false,0.0,0.0,"".to_owned(),None),
 		},
 		Compound{
-			name:vec!["Sodium Acetate".to_owned(),"acetát sodný".to_owned(),"acetátu sodného".to_owned(),"Sodium Ethanoate".to_owned()],
+			name:vec!["Sodium Acetate".to_owned(),"octan sodný".to_owned(),"octanu sodného".to_owned(),"Sodium Ethanoate".to_owned()],
 			formula:vec!["NaCH\u{2083}COO".to_owned(),"NaCH3COO".to_owned()],
 			mmass:82.03,
 			solutes:vec![(1,"Na".to_owned(),1),(1,"CH\u{2083}COO".to_owned(),-1)],
@@ -4377,7 +4382,7 @@ pub fn create_compound_lib(mut a:Vec<Compound>)->Vec<Compound>{
 			med: (false,0.0,0.0,"".to_owned(),None),
 		},
 		Compound{
-			name:vec!["Magnesium Acetate".to_owned(),"acetát hořečnatý".to_owned(),"acetátu hořečnatého".to_owned(),"Magnesium Ethanoate".to_owned()],
+			name:vec!["Magnesium Acetate".to_owned(),"octan hořečnatý".to_owned(),"octanu hořečnatého".to_owned(),"Magnesium Ethanoate".to_owned()],
 			formula:vec!["Mg(CH\u{2083}COO)\u{2082}".to_owned(),"Mg(CH3COO)2".to_owned()],
 			mmass:142.4,
 			solutes:vec![(1,"Mg".to_owned(),2),(2,"CH\u{2083}COO".to_owned(),-1)],
@@ -4388,7 +4393,7 @@ pub fn create_compound_lib(mut a:Vec<Compound>)->Vec<Compound>{
 			med: (false,0.0,0.0,"".to_owned(),None),
 		},
 		Compound{
-			name:vec!["Aluminium Acetate".to_owned(),"acetát hlinitý".to_owned(),"acetátu hlinitého".to_owned(),"Aluminium Ethanoate".to_owned()],
+			name:vec!["Aluminium Acetate".to_owned(),"octan hlinitý".to_owned(),"octanu hlinitého".to_owned(),"Aluminium Ethanoate".to_owned()],
 			formula:vec!["Al(CH\u{2083}COO)\u{2083}".to_owned(),"Al(CH3COO)3".to_owned()],
 			mmass:204.1,
 			solutes:vec![(1,"Al".to_owned(),3),(3,"CH\u{2083}COO".to_owned(),-1)],
