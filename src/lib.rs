@@ -541,7 +541,7 @@ pub trait Sscri {
 	fn sscri_html(self,lang:u8)->(String,String);
 	fn sscri_android_textview_html(self,lang:u8)->(String,String);
 	fn sscri_android_html(self,lang:u8)->(String,String);
-	fn sscri_html_body(self,lang:u8,format:&str)->String;
+	fn sscri_html_body(self,lang:u8,body_format:&str,span_format:&str)->String;
 }
 
 impl Sscri for (String,String) {	
@@ -572,10 +572,10 @@ impl Sscri for (String,String) {
 		(sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true))
 	}
 	
-	//Add <html><body><pre #format></pre></body></html> to a string.
-	fn sscri_html_body(self,lang:u8,format:&str)->String {
+	//Add <html><body><pre #><span #font></span></pre></body></html> to a string.
+	fn sscri_html_body(self,lang:u8,body_format:&str,span_format:&str)->String {
 		let (a,b) = (sscri_par_html(self.0,lang,true),sscri_par_html(self.1,lang,true));
-		format!("<html><body><pre {}>{}{}</pre></body></html>",format,a,b)
+		format!("<html><body {}><span {}>{}{}</span></body></html>",body_format,span_format,a,b)
 	}
 }
 
@@ -610,9 +610,9 @@ impl Sscri for String {
 	}
 	
 	//Add <html><body><pre #format></pre></body></html> to a string.
-	fn sscri_html_body(self,lang:u8,format:&str)->Self {
+	fn sscri_html_body(self,lang:u8,body_format:&str,span_format:&str)->Self {
 		let a = sscri_par_html(self,lang,true);
-		format!("<html><body><pre {}>{}</pre></body></html>",format,a)
+		format!("<html><body {}><span {}>{}</span></body></html>",body_format,span_format,a)
 	}
 }
 
