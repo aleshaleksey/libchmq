@@ -208,8 +208,9 @@ pub fn q_1_1(compounds:&Vec<Compound>)->(String,String){
 	//println!("answer: {}",answer);
 	
 	let question=format!("Jakou hmotnost má {} {}?",
-		format!("{}mol",dis(n))),
-		c.name[2];
+		format!("{}mol",dis(n)),
+		c.name[2]
+	);
 
 	let answer=format!("Hmotnost {} lze vypočítat vynásobením látkového množství {} jeho molarní hmotností.\n\n{}\n",
 		c.name[2],
