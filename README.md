@@ -70,8 +70,10 @@ let (q_and,a_and) = libchmq::enq::q_1_0(&compounds).sscri_android_textview_html(
 //Generate text for a question using android webView compatible format
 //using <html><body {#style}>{#content}</body></html>
 //NB text still needs to be encoded at "the other end" if used in an android app.
+let body_style:&str = "text=\"white\" opacity=\"0.0\"";
+let span_style:&str = "style=\"white-space:pre-wrap;\"";
 let (q_hb,a_hb) = libchmq::enq::q_1_0(&compounds)
-                               .sscri_html_body(libchmq::EN,"style=\"white-space:pre-wrap;\"");
+                               .sscri_html_body(libchmq::EN,body_style,span_style);
 
 println!("Question:\n{}\n\nAnswer:\n{}",q,a);
 println!("Now for html compatible subscripts/superscripts.\nQuestion:\n{}\n\nAnswer:\n{}",q_html,a_html);
