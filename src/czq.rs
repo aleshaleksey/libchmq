@@ -2358,7 +2358,7 @@ pub fn q_6_3(compounds:&Vec<Compound>)->(String,String){
 	let ans_exact=ion_exact/conc*100.0;
 	let ans_approx=ion_approx/conc*100.0;
 	
-	let question = format!("Jaký je stupeň disociace {} (v procentech), s koncentraci {}mol/l:\n\
+	let question = format!("Určete stupeň disociace {} (v procentech),v roztoku o koncentraci {}mol/l:\n\
 	(Použijte přibližnou metodu, přesnou metodu nebo obě)",
 		c.name[2],
 		dis(conc));
@@ -2423,13 +2423,13 @@ pub fn q_6_3b(compounds:&Vec<Compound>)->(String,String){
 	};
 	
 	//PRINT QUESTION.
-	let question = format!("Jestliže je stupeň disociace roztoku {} {}%, jaká je koncentrace tohoto roztoku:\n\
-	(Pomocí přibližný metody? Přesnou metodou?)",
+	let question = format!("Jestliže je stupeň disociace {} {}%, jaká je koncentrace této látky ve sledovaném roztoku:\n\
+	(Vypočítejte pomocí přibližné metody a přesnou metodou?)",
 	c.name[2],degree);
 	
 	//PRINT ANSWER.
-	let ans_a=format!("Koncentrace pomocí zjednodušené metody: {} {}mol/l",ff(4,ans_approx),approx_prefix);
-	let ans_b=format!("{}",format!("Koncentrace pomocí přesné metody: {} {}mol/l", ff(4,ans_exact),exact_prefix));	
+	let ans_a=format!("Koncentrace získaná pomocí zjednodušené metody: {} {}mol/l",ff(4,ans_approx),approx_prefix);
+	let ans_b=format!("{}",format!("Koncentrace získaná pomocí přesné metody: {} {}mol/l", ff(4,ans_exact),exact_prefix));	
 	let answer = format!("{}\n\n{}\n",ans_a,ans_b);
 	(question,answer)	
 }
@@ -2914,11 +2914,11 @@ pub fn q_7_1(compounds:&Vec<Compound>)->(String,String){
 	};	
 	
 	
-	let question = format!("Pufr složený z {} / {} obsahuje {} o koncentraci {}mol/l a má pH {}. Jaká je koncentrace {}?",
+	let question = format!("Pufr složený ze {} / {} má koncentraci {} {}mol/l a pH {}. Jaká je koncentrace {}?",
 		n_1,
 		n_2,
-		dis(c_1),
 		n_1,
+		dis(c_1),
 		ff(4,p_h),
 		n_2);
 	
@@ -3052,7 +3052,7 @@ pub fn q_7_1b(compounds:&Vec<Compound>)->(String,String){
 		n_2=&a.name[2]
 	};	
 
-	let question = format!("{}l roztoku o koncentraci {}M-{} je smíchán s roztokem {}M-{}. Konečné pH je {}. Jaký je objem roztoku {}?",
+	let question = format!("Roztok o objemu {}l a koncentraci {}M-{} je smíchán s roztokem {}M-{}. Konečné pH je {}. Jaký je objem roztoku {}?",
 		dis(v_1),
 		dis(c_1),
 		n_1,
@@ -3232,14 +3232,14 @@ pub fn q_7_2(compounds:&Vec<Compound>)->(String,String){
 	//let mut n_acid_fin=n_acid;
 	let mut p_h_fin=p_h_start;
 	let mut marker:(String,String,String,char)=("kyselina".to_owned(),
-												"jedná se stále o pufr".to_owned(),
-												"vypočítejte nové koncentrace a použijte Henderson-Hasselbalchovu rovnici".to_owned(),
+						"se stále jedná o pufr".to_owned(),
+						"vypočítejte nové koncentrace jednotlivých složek pufru a použijte Henderson-Hasselbalchovu rovnici".to_owned(),
 												'a');
 	
 	if (strong_is_acid==true) & ((n_base-n_strong)/(n_acid+n_strong)>0.1){
 		marker=("kyselina".to_owned(),
-				"jedná se stále o pufr".to_owned(),
-				"vypočítejte nové koncentrace a použijte Henderson-Hasselbalchovu rovnici".to_owned(),
+				"se stále jedná o pufr".to_owned(),
+				"vypočítejte nové koncentrace jednotlivých složek pufru a použijte Henderson-Hasselbalchovu rovnici".to_owned(),
 				'a');
 		p_h_fin=a.pka[0].0+((n_base-n_strong)/(n_acid+n_strong)).log(10.0)    	//acidified buffer.
 	}else if (strong_is_acid==true) & ((n_base-n_strong)/(n_acid+n_strong)>=-0.1){
@@ -3250,27 +3250,27 @@ pub fn q_7_2(compounds:&Vec<Compound>)->(String,String){
 		p_h_fin=0.5*(a.pka[0].0-(n_acid/v_fin+n_base/v_fin).log(10.0))			//Weak acid on a Knifedge.
 	}else if (strong_is_acid==true) & ((n_strong-n_base)/(n_acid+n_strong)>0.1){
 		marker=("kyselina".to_owned(),
-				"pufrační kapacita je překročena, přebývá silná kyselina".to_owned(),
+				"je pufrační kapacita překročena, přebývá silná kyselina".to_owned(),
 				"vypočitejte nové koncentrace a použijte rovnici pro výpočet pH silné kyseliny".to_owned(),
 				'c');
 		p_h_fin= -((n_strong-n_base)/v_fin).log(10.0)						//Overacidifed. Strong acid.
 	}else if (strong_is_acid==false)
 		   & (((n_base+n_strong)/(n_acid-n_strong)<10.0) & ((n_base+n_strong)/(n_acid-n_strong)>0.1)){
 		marker=("báze".to_owned(),
-				"jedná se stále o pufr".to_owned(),
+				"se stále jedná o pufr".to_owned(),
 				"vypočítejte nové koncentrace a použijte Henderson-Hasselbalchovu rovnici".to_owned(),
 				'A');
 		p_h_fin=a.pka[0].0+((n_base+n_strong)/(n_acid-n_strong)).log(10.0)		//alkalinised buffer.
 	}else if (strong_is_acid==false)
 	       & (((n_acid-n_strong)/(n_base+n_strong)<=0.1) & ((n_acid-n_strong)/(n_base+n_strong)>=-0.1)){
 		marker=("báze".to_owned(),
-				"pufrační kapacita je překročena, silná báze kompletně je zneutralizovaná".to_owned(),
+				"je pufrační kapacita překročena, silná báze je kompletně zneutralizovaná".to_owned(),
 				"vypočítejte nové koncentrace a použijte rovnici pro slabou zásadu".to_owned(),
 				'B');
 		p_h_fin=7.0+0.5*(a.pka[0].0+(n_acid/v_fin+n_base/v_fin).log(10.0))		//Weak base on a knifedge.
 	}else if (strong_is_acid==false) & ((n_strong-n_acid)/(n_base+n_strong)>0.1){
 		marker=("báze".to_owned(),
-				"pufrační kapacita je překročena, přebytek silné báze".to_owned(),
+				"je pufrační kapacita překročena, přebytek silné báze".to_owned(),
 				"vypočítejte nové koncentrace a použijte rovnici pro silnou bázi".to_owned(),
 				'C');
 		p_h_fin= 14.0+((n_strong-n_acid)/v_fin).log(10.0)						//Overalkanisied. Strong acid.
@@ -3292,7 +3292,7 @@ pub fn q_7_2(compounds:&Vec<Compound>)->(String,String){
 	
 	//PRINT QUESTION.
 	let question = format!("Pufr obsahuje {}M-{} a {}M-{}. \
-		{}l {}M-{} bylo přidáno do {}l tohoto roztoku. \
+		{}l {}M-{} bylo přidáno do {}l výše popsaného pufru. \
 		'Jaké je':\n a) Počáteční pH?\n b) Konečné pH? \n c) Změna pH?",
 		dis(c_1),
 		n_1,
@@ -3317,7 +3317,7 @@ pub fn q_7_2(compounds:&Vec<Compound>)->(String,String){
 	ans_a.push(format!("\nb) Konečné pH:"));
 	ans_a.push(format!("\n   {} je silná {}. Po přídavku {} {}.",strong.name[1],marker.0,strong.name[2],marker.1));
 	ans_a.push(format!("\n   Konečné pH {}.",marker.2));
-	ans_a.push(format!("\nc) ΔpH = konečné pH -počáteční pH.\n"));
+	ans_a.push(format!("\nc) ΔpH = konečné pH - počáteční pH.\n"));
 	
 	ans_a.push(format!("\n{}",format!("a) Počáteční pH = {}",&ff(4,p_h_start))));
 	ans_a.push(format!("\n{}",format!("b) Konečné pH = {}",&ff(4,p_h_fin))));
@@ -3426,7 +3426,7 @@ pub fn q_7_3(compounds:&Vec<Compound>)->(String,String){
 	};	
 	
 	let species="(".to_owned()+&a.formula[0]+"+"+&a.pka[0].1+")";
-	let question = format!("Pufr složený z {} / {} má celkovou koncentraci pufrujících kompnent rovnou {}mol/l a má pH {}. Jaká je koncentrace {} a {}?",
+	let question = format!("Pufr složený z {} / {} má celkovou koncentraci pufrujících komponent rovnou {}mol/l a pH {}. Jaká je koncentrace {} a {}?",
 		n_1,
 		n_2,
 		dis(c_ion),
@@ -3442,10 +3442,10 @@ pub fn q_7_3(compounds:&Vec<Compound>)->(String,String){
 		ans_a.push(format!("\n[{}] = {} x [{}] + {} x [{}]",species,nimp_in_s,s.formula[0],nimp_in_a,a.formula[0]));
 		if coin_toss<5 {
 			ans_a.push(format!("\n[{} x {}] = [{}-{} x {}] x 10^(pH-pKa)",nimp_in_s,s.formula[0],species,nimp_in_s,s.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",s.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",s.formula[0]));
 		}else{
 			ans_a.push(format!("\n[{} x {}] = [{}-{} x {}] x 10^(pKa-pH)",nimp_in_a,a.formula[0],species,nimp_in_a,a.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",a.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",a.formula[0]));
 		}
 	}else{
 		ans_a.push(format!("\npH = pKa + log([B]/[S])"));
@@ -3453,10 +3453,10 @@ pub fn q_7_3(compounds:&Vec<Compound>)->(String,String){
 		ans_a.push(format!("\n[{}] = {} x [{}] + {} x [{}]",species,nimp_in_s,s.formula[0],nimp_in_a,a.formula[0]));
 		if coin_toss<5 {
 			ans_a.push(format!("\n[{} x {}] = [{}-{} x {}] x 10^(pH-pKa)",nimp_in_a,a.formula[0],species,nimp_in_a,a.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",a.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",a.formula[0]));
 		}else{
 			ans_a.push(format!("\n[{} x {}] = [{}-{} x {}] x 10^(pKa-pH)",nimp_in_s,s.formula[0],species,nimp_in_s,s.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",s.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",s.formula[0]));
 		}	
 	};
 	ans_a.push(format!("\nPak jděte zpět a nahraďte:\n[{}]={}x[{}] + {}x[{}]",species,nimp_in_s,s.formula[0],nimp_in_a,a.formula[0]));
@@ -3593,10 +3593,10 @@ pub fn q_7_3b(compounds:&Vec<Compound>)->(String,String){
 		ans_a.push(format!("\nOsmolarita = {} x [{}] + {} x [{}]",nimp_in_a,a.formula[0],salt_const,s.formula[0]));
 		if coin_toss<5 {
 			ans_a.push(format!("\n[{} x {}] = [Osmolarita-{} x {}] x 10^(pH-pKa)",salt_const,s.formula[0],salt_const,s.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",s.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",s.formula[0]));
 		}else{
 			ans_a.push(format!("\n[{} x {}] = [Osmolarita-{} x {}] x 10^(pKa-pH)",nimp_in_a,a.formula[0],nimp_in_a,a.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",a.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",a.formula[0]));
 		}
 	}else{
 		ans_a.push(format!("\npH = pKa + log([B]/[S])"));
@@ -3608,10 +3608,10 @@ pub fn q_7_3b(compounds:&Vec<Compound>)->(String,String){
 		ans_a.push(format!("\nOsmolarita = {} x [{}] + {} x [{}]",nimp_in_a,a.formula[0],salt_const,s.formula[0]));
 		if coin_toss<5 {
 			ans_a.push(format!("\n[{} x {}] = [Osmolarita-{} x {}] x 10^(pH-pKa)",nimp_in_a,a.formula[0],nimp_in_a,a.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",a.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",a.formula[0]));
 		}else{
 			ans_a.push(format!("\n[{} x {}] = [Osmolarita-{} x {}] x 10^(pKa-pH)",salt_const,s.formula[0],salt_const,s.formula[0]));
-			ans_a.push(format!("\nZ této rovnicé vyjádřete a vypočítejte [{}].",s.formula[0]));
+			ans_a.push(format!("\nZ této rovnice vyjádřete a vypočítejte [{}].",s.formula[0]));
 		}	
 	};
 	ans_a.push(format!("\nPak jděte zpět a nahraďte:\n[{}]={}x[{}] + {}x[{}]",a.pka[0].1,nimp_in_s,s.formula[0],nimp_in_a,a.formula[0]));
@@ -3739,14 +3739,14 @@ fn q_s_0(compounds:&Vec<Compound>)->(String,String){
 			ans_a.push(format!("\nProto I = {}x[{}]^({}) + {}x[{}]^({})",
 		                    c.solutes[0].0,c.solutes[0].1,c.solutes[0].2*c.solutes[0].2,c.solutes[1].0,c.solutes[1].1,c.solutes[1].2*c.solutes[1].2));
 			ans_a.push(format!("\n{}(+1) částečně reasociuje zvýšením [H(+1)], ale to neměni iontovou sílu.",c.pka[0].1));
-			ans_a.push(format!("\ntakže použij rovnici pro slabou kyselinu to získal koncentraci {}.",c.name[2]));
+			ans_a.push(format!("\nTakže použijte rovnici pro slabou kyselinu, aby jste získali koncentraci {}.",c.name[2]));
 		}else{
 			ans_a.push(format!("\n {} je sůl, která plně disociuje na {}x{}({}) and {}x{}({})",
 							c.name[1],c.solutes[0].0,c.solutes[0].1,c.solutes[0].2,c.solutes[1].0,c.solutes[1].1,c.solutes[1].2));
 			ans_a.push(format!("\nProto I = {}x[{}]^({}) + {}x[{}]^({})",
 		                    c.solutes[0].0,c.solutes[0].1,c.solutes[0].2*c.solutes[0].2,c.solutes[1].0,c.solutes[1].1,c.solutes[1].2*c.solutes[1].2));
-			ans_a.push(format!("\n{}(-1) částščně reasociuje snížením [H(+1)], ale to neměni iontovou sílu.",c.pka[0].1));
-			ans_a.push(format!("\ntakže použij rovnici pro výpočet pH slabé báze, aby jste získali koncentraci {}.",c.name[2]));
+			ans_a.push(format!("\n{}(-1) částečně reasociuje snížením [H(+1)], ale to neměni iontovou sílu.",c.pka[0].1));
+			ans_a.push(format!("\nTakže použijte rovnici pro výpočet pH slabé báze, aby jste získali koncentraci {}.",c.name[2]));
 		};
 	};
 	
