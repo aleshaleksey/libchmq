@@ -1,6 +1,7 @@
 
+// make_standalone_toolchain.py --api 14 --arch arm --install-dir  first. (Make sure libraries are in toolchain lib.)
 
-	
+
 #![allow(dead_code)]
 #![allow(unused_imports)]
 
@@ -65,7 +66,7 @@ You have been warned!
 
 pub const ABOUT:&'static str=
 "Name:     Med Chem Quiz                      
-Version:  1.11                          
+Version:  Mobile Edition Beta                           
 Created:  2018-11 (2017-11)                            
 Author:   Aleksey Zholobenko
 For:      Calculations in Medical Chemistry, 
@@ -879,8 +880,8 @@ pub fn q_2_2(compounds:&Vec<Compound>)->(String,String){
 		v_litre
 	);
 	
-	let answer_a=format!("Moles of {} (mol) = {}",c.name[0],m/c.mmass);
-	let answer_b=format!("Osmoles of {} (osmol) = {}",c.name[0],m/c.mmass*sf64);
+	let answer_a=format!("Moles of {} = {} mol",c.name[0],m/c.mmass);
+	let answer_b=format!("Osmoles of {} = {} Osmol",c.name[0],m/c.mmass*sf64);
 	let answer_c=format!("{}\n",format!("Answer= {}Osmol/L",dis(answer)));
 	let answer = format!("{}\n{}\n\n {}\n",answer_a,answer_b,answer_c);
 	(question,answer)
@@ -935,8 +936,8 @@ pub fn q_2_3(compounds:&Vec<Compound>)->(String,String){
 		dis(osm)
 	);
 	
-	let ans_a=format!("Osmoles of {} (osmol) = {}",c.name[0],osm*v_litre);
-	let ans_b=format!("Moles of {} (mol) = {}",c.name[0],osm*v_litre/sf64);
+	let ans_a=format!("Osmoles of {} = {} Osmol",c.name[0],osm*v_litre);
+	let ans_b=format!("Moles of {} = {} mol",c.name[0],osm*v_litre/sf64);
 	let ans_c=format!("{}\n",format!("Answer = {}g",dis(answer)));
 	let answer = format!("\n{}\n{}\n\n {}\n",ans_a,ans_b,ans_c);
 	(question,answer)	
@@ -1019,7 +1020,7 @@ pub fn q_2_4(compounds:&Vec<Compound>)->(String,String){
 	
 	//Generate answer text.
 	let ans_a=format!("Temperature (Kelvin) = {}",temp_k);
-	let ans_b=format!("Osmolarity (osmol/L) = {}",osmoles/v_litre);
+	let ans_b=format!("Osmolarity = {}",osmoles/v_litre);
 	let ans_c=format!("{}",format!("Answer = {} KPa",&ff(4,answer)));
 	let answer = format!("{}\n{}\n\n {}\n",ans_a,ans_b,ans_c);
 	(question,answer)
@@ -1122,10 +1123,10 @@ pub fn q_2_4s(compounds:&Vec<Compound>)->(String,String){
 	
 	//Generate answer text.
 	let ans_a=format!("Temperature (Kelvin) = {}",temp_k);	
-	let ans_b=format!("Osmolarity (osmol/L) (all solutes) = {}",osm_ity);
-	let ans_c=format!("Osmolarity (osmol/L) (all solutes apart from {}) = {}",comp_vec[0].name[0],osm_ity_a);
-	let ans_d=format!("Osmolarity of {} (osmol/L) = {}",comp_vec[0].name[0],osm_ity_b);
-	let ans_e=format!("Molarity of {} (mol/L)= {}",comp_vec[0].name[0],osm_ity_b/sol_x);
+	let ans_b=format!("Osmolarity (all solutes) = {}",osm_ity);
+	let ans_c=format!("Osmolarity (all solutes apart from {}) = {}",comp_vec[0].name[0],osm_ity_a);
+	let ans_d=format!("Osmolarity of {} = {}",comp_vec[0].name[0],osm_ity_b);
+	let ans_e=format!("Molarity of {} = {}",comp_vec[0].name[0],osm_ity_b/sol_x);
 	let ans_f=format!("{}",format!("Answer = {}g",dis(m_comps[0])));
 	let answer = format!("{}\n{}\n{}\n{}\n{}\n\n {}\n",ans_a,ans_b,ans_c,ans_d,ans_e,ans_f);
 	(question,answer)
@@ -1179,7 +1180,7 @@ pub fn q_3_0(compounds:&Vec<Compound>)->(String,String){
 	c.name[0]);
 	//println!("D");
 	let mut answer_a:Vec<String>=Vec::new();
-	answer_a.push("I = Σ(c x q^2)".to_owned());
+	answer_a.push("I = Σ(c x q^2)/2".to_owned());
 	
 	for x in c.solutes.iter(){
 		if x.2!=0{
@@ -1238,7 +1239,7 @@ pub fn q_3_1(compounds:&Vec<Compound>)->(String,String){
 	let question = format!("What is the molarity of a {} solution with an ionic strength of {}?",c.name[0],dis_u(spq));
 	
 	let mut answer_a:Vec<String>=Vec::new();
-	answer_a.push("I = Σ(c x q^2)".to_owned());
+	answer_a.push("I = Σ(c x q^2)/2".to_owned());
 	
 	for x in c.solutes.iter(){
 		if x.2!=0{
@@ -1301,7 +1302,7 @@ pub fn q_3_2(compounds:&Vec<Compound>)->(String,String){
 	let answer_a=format!("{} concentration = {} mol/L",c.name[0],&ff(4,conc));
 	let mut answer_b:Vec<String>=Vec::new();
 	
-	answer_b.push("I = Σ(c x q^2)".to_owned());
+	answer_b.push("I = Σ(c x q^2)/2".to_owned());
 	for x in c.solutes.iter(){
 		if x.2!=0{
 			answer_b.push(format!("Ion: {} x {}. (q^2 = {})",x.0,x.1,(x.2)*(x.2)))
@@ -1384,7 +1385,7 @@ pub fn q_3_2b(compounds:&Vec<Compound>)->(String,String){
 	let mut factor:usize=0;
 	let mut ans_a:Vec<String>=Vec::new();
 	
-	ans_a.push("I = Σ(c x q^2)".to_owned());
+	ans_a.push("I = Σ(c x q^2)/2".to_owned());
 	for x in c.solutes.iter(){
 		if x.2!=0{
 			ans_a.push(format!("Ion: {} x {}. (q^2 = {})",x.0,x.1,(x.2)*(x.2)));
@@ -1396,8 +1397,8 @@ pub fn q_3_2b(compounds:&Vec<Compound>)->(String,String){
 	};
 	let ans_a=ans_a.join("\n");
 	let ans_b=format!("\n2 x I/C = {}",factor);
-	let ans_c=format!("Therefore {} concentration = {} mol/L",c.name[0],ff(6,conc));
-	let ans_d=format!("Moles = {}",moles);
+	let ans_c=format!("Therefore {} concentration = {} mol/L",c.name[0],conc);
+	let ans_d=format!("Moles = {} mol",moles);
 	let ans_e=format!("{}",format!("Answer = {}L",dis(v_litre)));
 	let answer = format!("{}\n{}\n{}\n{}\n\n {}\n",ans_a,ans_b,ans_c,ans_d,ans_e);
 	(question,answer)
@@ -1474,7 +1475,7 @@ pub fn q_3_2c(compounds:&Vec<Compound>)->(String,String){
 	let mut ans_a:Vec<String>=Vec::new();
 	let mut factor:usize=0;
 	
-	ans_a.push("I = Σ(c x q^2)".to_owned());
+	ans_a.push("I = Σ(c x q^2)/2".to_owned());
 	for x in c.solutes.iter(){
 		if x.2!=0{
 			ans_a.push(format!("Ion: {} x {}. (q^2 = {})",x.0,x.1,(x.2)*(x.2)));
