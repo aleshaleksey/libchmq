@@ -4176,7 +4176,7 @@ pub fn q_5_0_enthalpy(reactions:&Vec<Reaction>)->(String,String) {
 }
 
 //work out Keq from equilibrium concentrations.
-//UNFINISHED.
+//FINISHEDISH.
 
 pub fn q_5_1(reactions:&Vec<Reaction>)->(String,String) {
 	
