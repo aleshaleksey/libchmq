@@ -33,16 +33,16 @@ use R;
 
 pub const TITLE:&str = "
 
-  Med Chem Quiz V.1.1.1   
-  2018-10-28              ";
+  Med Chem Quiz V.1.12   
+  2019-01-09              ";
 pub const WARNING:&'static str="
 Tento soubor cvičení byl navržen, za účelem zlepšit schopnosti uživatele v řešení chemických výpočtů. \
 Primárně je určen k procvičování uživatele ve výpočtech pro modul \"Výpočty v lékařské chemii\". \
-Nicméně má tři významné omezení:
+Nicméně má tři významná omezení:
 
 1) Jedná se o cvičení, \
-které by mělo zlepšit dovednosti uživatele v řešení výpočetních úloh, \
-ale je nepravděpodobné, že pomůže pochopit dané téma. 
+které by mělo zlepšit dovednost uživatele řešit výpočetní úlohy, \
+ale není pravděpodobné, že pomůže pochopit dané téma. 
 
 2) Je důležité vyzkoušet široké spektrum výpočtů, aby se uživatel sžil v \"práci s čísly\", \
 ale otázky generované programem využívají pouze omezený počet pevně daných vzorů. \
@@ -58,7 +58,7 @@ Byli jste varováni!
 pub const ABOUT:&'static str="
 
 Jméno:       Med Chem Quiz                      
-Verze:       1.11                              
+Verze:       1.12                              
 Vytvořeno:   2018-11 (2017-11 )                            
 Autor:       Aleksey Zholobenko                 
            & Zdenek Dostal                      
