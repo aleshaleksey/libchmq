@@ -2086,7 +2086,7 @@ pub fn q_6_2a(compounds:&Vec<Compound>)->(String,String){
 		}else if ((mol_h-mol_oh)/mol_oh<0.1)
 			& ((mol_h-mol_oh)/mol_oh>=-0.1) 
 			& (a.use_weak==true) {
-				ans_a.push(format!("Téměř úplná neutralizace slabé kyseliny (počítejte jako sůl slabé báze): \
+				ans_a.push(format!("Téměř úplná neutralizace slabé kyseliny (počítejte jako slabou bázi): \
 									použijte pH = 7 + 0.5 x (pKa + log({} x [{}])",b_bron.1,b.formula[0]))
 		}else{
 			ans_a.push(format!("Úplná neutralizace. pH = 7"))};
@@ -2100,7 +2100,7 @@ pub fn q_6_2a(compounds:&Vec<Compound>)->(String,String){
 				ans_a.push(format!("Malý přebytek slabé báze (pufr!): Použijte pH = pKa + log([S]/[A])"))
 		}else if ((mol_oh-mol_h)/mol_h<0.1)
 			& ((mol_oh-mol_h)/mol_h>=-0.1) {
-				ans_a.push(format!("Téměř úplná neutraliace slabé báze (počítejte jako sůl slabé kyseliny: \
+				ans_a.push(format!("Téměř úplná neutraliace slabé báze (počítejte jako slabou kyselinu: \
 									použijte pH = 0.5 x (pKa + log({} x [{}])",a_bron.1,a.formula[0]))
 		}else{
 			ans_a.push(format!("Úplná neutralizace. pH = 7"))};
@@ -2286,7 +2286,7 @@ pub fn q_6_2b(compounds:&Vec<Compound>)->(String,String){
 		}else if ((mol_h-mol_oh)/mol_oh<0.1)
 			& ((mol_h-mol_oh)/mol_oh>=-0.1) 
 			& (a.use_weak==true) {
-				ans_a.push(format!("Téměř úplná neutalizce slabé kyseliny (počítejte jako sůl slabé báze): \
+				ans_a.push(format!("Téměř úplná neutalizce slabé kyseliny (počítejte jako slabou bázi): \
 									použijte pH = 7 + 0.5 x (pKa + log({} x [{}])",b_bron.1,b.formula[0]))
 		}else{
 			ans_a.push(format!("Úplná neutralizace. pH = 7"))
@@ -2301,7 +2301,7 @@ pub fn q_6_2b(compounds:&Vec<Compound>)->(String,String){
 				ans_a.push(format!("Malý přebytek slabé báze (pufr!): použijte pH = pKa + log([S]/[A])"))
 		}else if ((mol_oh-mol_h)/mol_h<0.1)
 			& ((mol_oh-mol_h)/mol_h>=-0.1) {
-				ans_a.push(format!("Téměř úplná neutralizace slabé báze (počítejte jako sůl slabé kyseliny): \
+				ans_a.push(format!("Téměř úplná neutralizace slabé báze (počítejte jako slabou kyselinu): \
 									použijte pH = 0.5 x (pKa + log({} x [{}])",a_bron.1,a.formula[0]))
 		}else{
 			ans_a.push(format!("Úplná neutralizace. pH = 7"))
