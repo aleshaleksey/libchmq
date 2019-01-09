@@ -44,7 +44,7 @@ Nicméně má tři významné omezení:
 které by mělo zlepšit dovednosti uživatele v řešení výpočetních úloh, \
 ale je nepravděpodobné, že pomůže pochopit dané téma. 
 
-2) Je důležité vyzkoušet široké spektrum výpočtů, aby se uživatel stal zběhlým v \"práci s čísly\", \
+2) Je důležité vyzkoušet široké spektrum výpočtů, aby se uživatel sžil v \"práci s čísly\", \
 ale otázky generované programem využívají pouze omezený počet pevně daných vzorů. \
 Je tedy důležité, aby uživatel čerpal otázky i z jiných zdrojů.
 
