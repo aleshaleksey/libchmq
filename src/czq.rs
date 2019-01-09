@@ -3265,13 +3265,13 @@ pub fn q_7_2(compounds:&Vec<Compound>)->(String,String){
 	       & (((n_acid-n_strong)/(n_base+n_strong)<=0.1) & ((n_acid-n_strong)/(n_base+n_strong)>=-0.1)){
 		marker=("báze".to_owned(),
 				"je pufrační kapacita překročena, silná báze je kompletně zneutralizovaná".to_owned(),
-				"vypočítejte nové koncentrace a použijte rovnici pro slabou zásadu".to_owned(),
+				"vypočítejte nové koncentrace a použijte rovnici pro výpočet pH slabé zásady".to_owned(),
 				'B');
 		p_h_fin=7.0+0.5*(a.pka[0].0+(n_acid/v_fin+n_base/v_fin).log(10.0))		//Weak base on a knifedge.
 	}else if (strong_is_acid==false) & ((n_strong-n_acid)/(n_base+n_strong)>0.1){
 		marker=("báze".to_owned(),
 				"je pufrační kapacita překročena, přebytek silné báze".to_owned(),
-				"vypočítejte nové koncentrace a použijte rovnici pro silnou bázi".to_owned(),
+				"vypočítejte nové koncentrace a použijte rovnici pro výpočet pH silné báze".to_owned(),
 				'C');
 		p_h_fin= 14.0+((n_strong-n_acid)/v_fin).log(10.0)						//Overalkanisied. Strong acid.
 	}else{};
@@ -3714,19 +3714,19 @@ fn q_s_0(compounds:&Vec<Compound>)->(String,String){
 	let question = q_phrases[rand::thread_rng().gen_range(0,q_phrases.len())].clone();
 	
 	let mut ans_a=Vec::new();
-	ans_a.push(format!("I = Σcq^2. Iontovou sílu ovlivňují pouze ionty. Disociace stanovuje koncentraci iontů a proto pH a pOH"));
+	ans_a.push(format!("I = 0,5 x Σ(cz^2). Iontovou sílu ovlivňují pouze ionty. Disociace stanovuje koncentraci iontů a proto pH a pOH"));
 	if marker=='a'{
 		ans_a.push(format!("\n{} je slabá kyselina. Disociuje částečně na {}x{}({}) a {}x{}({})",
 							c.name[1],c.solutes[0].0,c.solutes[0].1,c.solutes[0].2,c.solutes[1].0,c.solutes[1].1,c.solutes[1].2));
 		ans_a.push(format!("\nProto I = [{}]^({}) + [{}]^({})",
 		                    c.solutes[0].1,c.solutes[0].2*c.solutes[0].2,c.solutes[1].1,c.solutes[1].2*c.solutes[1].2));
-		ans_a.push(format!(" = 2x[H]^(1)"));
+		ans_a.push(format!(" = [H]x1^(2)"));
 	}else if marker=='b'{
 		ans_a.push(format!("\n {} je slabá báze. Disociuje částečně na {}x{}({}) a {}x{}({})",
 							c.name[1],c.solutes[0].0,c.solutes[0].1,c.solutes[0].2,c.solutes[1].0,c.solutes[1].1,c.solutes[1].2));
 		ans_a.push(format!("\nProto I = [{}]^({}) + [{}]^({})",
 		                    c.solutes[0].1,c.solutes[0].2*c.solutes[0].2,c.solutes[1].1,c.solutes[1].2*c.solutes[1].2));
-		ans_a.push(format!(" = 2x[OH]^(1)"));	
+		ans_a.push(format!(" = [OH]x1^(2)"));	
 	}else{
 		if c.use_weak==false{
 			ans_a.push(format!("\n {} disociuje kompletně na {}x{}({}) a {}x{}({})",
@@ -3864,19 +3864,19 @@ fn q_s_1(compounds:&Vec<Compound>)->(String,String){  //Not finished.!!.!!.!!.!!
 	let question = q_phrases[rand::thread_rng().gen_range(0,q_phrases.len())].clone();
 	
 	let mut ans_a=Vec::new();
-	ans_a.push(format!("I = Σcq^2. Iontovou sílu ovlivňují pouze ionty. Disociace ovlivňuje koncentraci iontů a proto pH a pOH"));
+	ans_a.push(format!("I = 0,5 x Σcq^2. Iontovou sílu ovlivňují pouze ionty. Disociace ovlivňuje koncentraci iontů a proto pH a pOH"));
 	if marker=='a'{
 		ans_a.push(format!("\n{} je slabá kyselina. Částečně disociuje na {}x{}({}) a {}x{}({})",
 							c.name[2],c.solutes[0].0,c.solutes[0].1,c.solutes[0].2,c.solutes[1].0,c.solutes[1].1,c.solutes[1].2));
 		ans_a.push(format!("\nProto I = [{}]^({}) + [{}]^({})",
 		                    c.solutes[0].1,c.solutes[0].2*c.solutes[0].2,c.solutes[1].1,c.solutes[1].2*c.solutes[1].2));
-		ans_a.push(format!(" = 2x[H]^(1)"));
+		ans_a.push(format!(" = [H]1^(2)"));
 	}else if marker=='b'{
 		ans_a.push(format!("\n {} je slabá báze. Částečně disociuje na {}x{}({}) a {}x{}({})",
 							c.name[2],c.solutes[0].0,c.solutes[0].1,c.solutes[0].2,c.solutes[1].0,c.solutes[1].1,c.solutes[1].2));
 		ans_a.push(format!("\nProto I = [{}]^({}) + [{}]^({})",
 		                    c.solutes[0].1,c.solutes[0].2*c.solutes[0].2,c.solutes[1].1,c.solutes[1].2*c.solutes[1].2));
-		ans_a.push(format!(" = 2x[OH]^(1)"));	
+		ans_a.push(format!(" = [OH]x1^(2)"));	
 	}else{
 		if c.use_weak==false{
 			ans_a.push(format!("\n {} disociuje úplně na {}x{}({}) a {}x{}({})",
